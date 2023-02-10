@@ -4,6 +4,10 @@
   font-weight: 500;
   line-height: 48px;
   position: relative;
+  /* width: 340px; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .profile__title::after {
