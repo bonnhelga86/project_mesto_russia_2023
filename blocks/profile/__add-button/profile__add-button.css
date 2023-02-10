@@ -1,3 +1,17 @@
 .profile__add-button {
+  padding: 0;
+  width: 150px;
+  height: 50px;
+  align-self: center;
+  background: inherit;
+  border: 2px solid #fff;
+}
 
+.profile__add-button::after {
+  content: '';
+  width: 22px;
+  height: 22px;
+  display: block;
+  background: url(../../../images/add-symbol.svg);
+  margin: 0 auto;
 }
