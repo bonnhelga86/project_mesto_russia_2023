@@ -3,4 +3,16 @@
   font-size: 42px;
   font-weight: 500;
   line-height: 48px;
+  position: relative;
+}
+
+.profile__title::after {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 24px;
+  background: url(../../../images/profile-edit-button.svg);
+  position: absolute;
+  top: 16px;
+  right: -44px;
 }
