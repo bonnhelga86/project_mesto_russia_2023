@@ -2,3 +2,26 @@
   padding: 0 200px 66px;
   margin: 0 auto;
 }
+
+@media screen and (max-width: 1141px) {
+  .elements {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+}
+
+@media screen and (max-width: 885px) {
+  .elements {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 58px;
+  }
+}
+
+@media screen and (max-width: 457px) {
+  .elements {
+    padding-left: 19px;
+    padding-right: 19px;
+    padding-bottom: 48px;
+  }
+}
