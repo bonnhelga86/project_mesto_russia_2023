@@ -1,0 +1,15 @@
+.element__content {
+  position: relative;
+}
+
+.element__content::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 22px;
+  height: 19px;
+  background: url(../../../images/icon-like.svg);
+  background-size: cover;
+  top: 30px;
+  right: 20px;
+}
