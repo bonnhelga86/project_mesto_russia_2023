@@ -1,4 +1,4 @@
-.pop-up-profile {
+.popup__container {
   margin: 0 auto;
   padding: 34px 36px 37px;
   width: 430px;
@@ -9,7 +9,12 @@
   transform: translate(99%, -135px);
 }
 
-.pop-up-profile::before {
+.popup__container::before {
+  content: '';
+
+}
+
+.popup__container::after {
   content: '';
   position: absolute;
   background: url(../../images/icon-close.svg);
