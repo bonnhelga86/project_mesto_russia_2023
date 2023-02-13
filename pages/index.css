@@ -14,9 +14,19 @@
 @import url("../blocks/profile/__content/profile__content.css");
 @import url("../blocks/profile/__image/profile__image.css");
 @import url("../blocks/profile/__info/profile__info.css");
-@import url("../blocks/profile/__title/profile__title.css");
-@import url("../blocks/profile/__text/profile__text.css");
+@import url("../blocks/profile/__name/profile__name.css");
+@import url("../blocks/profile/__profession/profile__profession.css");
 @import url("../blocks/profile/__add-button/profile__add-button.css");
+
+@import url("../blocks/pop-up-profile/pop-up-profile.css");
+@import url("../blocks/pop-up-profile/__title/pop-up-profile__title.css");
+@import url("../blocks/pop-up-profile/__form/pop-up-profile__form.css");
+@import url("../blocks/pop-up-profile/__name-contain/pop-up-profile__name-contain.css");
+@import url("../blocks/pop-up-profile/__input/pop-up-profile__input.css");
+@import url("../blocks/pop-up-profile/__input/_type/pop-up-profile__input_type_name.css");
+@import url("../blocks/pop-up-profile/__profession-contain/pop-up-profile__profession-contain.css");
+@import url("../blocks/pop-up-profile/__input/_type/pop-up-profile__input_type_profession.css");
+@import url("../blocks/pop-up-profile/__save-button/pop-up-profile__save-button.css");
 
 @import url("../blocks/elements/elements.css");
 @import url("../blocks/elements/__list-item/elements__list-item.css");

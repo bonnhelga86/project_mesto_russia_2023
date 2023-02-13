@@ -21,13 +21,38 @@
           <div class="profile__content">
             <img src="./images/profile-image.jpg" alt="Жак-Ив Кусто" class="profile__image">
             <div class="profile__info">
-              <h1 class="profile__title">Жак-Ив Кусто</h1>
-              <p class="profile__text">Исследователь океана</p>
+              <h1 class="profile__name">Жак-Ив Кусто</h1>
+              <p class="profile__profession">Исследователь океана</p>
             </div>
           </div>
           <button class="profile__add-button"></button>
         </section>
       <!-- Конец секции Profile -->
+
+      <!-- Начало блока Pop-Up -->
+        <section class="pop-up-profile">
+          <h2 class="pop-up-profile__title">Редактировать профиль</h2>
+          <form class="pop-up-profile__form">
+            <!-- <fieldset class="pop-up-profile__name-contain"> -->
+              <input
+                name="profile-name"
+                type="text"
+                class="pop-up-profile__input pop-up-profile__input_type_name"
+                placeholder="Ваше имя"
+              >
+            <!-- </fieldset> -->
+            <!-- <fieldset class="pop-up-profile__profession-contain"> -->
+              <input
+                name="profile-profession"
+                type="text"
+                class="pop-up-profile__input pop-up-profile__input_type_profession"
+                placeholder="Ваш тип деятельности"
+              >
+            <!-- </fieldset> -->
+            <button class="pop-up-profile__save-button" type="submit">Сохранить</button>
+          </form>
+        </section>
+      <!-- Конец блока Pop-Up -->
 
       <!-- Начало секции Elements -->
       <section class="elements">
