@@ -1,8 +1,8 @@
 .popup__input {
-  padding: 0 0 9px;
+  padding-bottom: 9px;
+  /* padding: 0 0 9px; */
   margin-bottom: 30px;
   border: none;
-  outline: none;
   border-bottom: 1px solid rgba(0, 0, 0, .2);
   font-family: inherit;
   font-weight: 400;
