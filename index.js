@@ -15,10 +15,10 @@ function openPopupEdit() {
 }
 
 function savePopupEdit(event) {
+  event.preventDefault();
   let savePopupValue = getValue();
   savePopupValue.profileName.textContent = savePopupValue.inputName.value;
   savePopupValue.profileProfession.textContent = savePopupValue.inputProfession.value;
-  event.preventDefault();
   closePopupEdit();
 }
 
