@@ -7,6 +7,11 @@
   border: 2px solid #fff;
 }
 
+.profile__add-button:hover {
+  cursor: pointer;
+  opacity: .6;
+}
+
 .profile__add-button::after {
   content: '';
   width: 22px;
