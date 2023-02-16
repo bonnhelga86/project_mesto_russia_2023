@@ -1,13 +1,10 @@
-let popupEditOpen = document.querySelector('.profile__edit');
+let profileEditOpen = document.querySelector('.profile__edit');
 let popupEditSave = document.querySelector('.popup__save-button');
 let popupEditClose = document.querySelector('.popup__close');
 let popup = document.querySelector('.popup');
+let hasValue = {};
 
-popupEditOpen.addEventListener('click', openPopupEdit);
-popupEditSave.addEventListener('click', savePopupEdit);
-popupEditClose.addEventListener('click', closePopupEdit);
-
-function openPopupEdit() {
+function openProfileEdit() {
   popup.classList.add('popup_opened');
   let openPopupValue = getValue();
   openPopupValue.inputName.value = openPopupValue.profileName.textContent;
@@ -27,7 +24,7 @@ function closePopupEdit() {
 }
 
 function getValue() {
-  let hasValue = {
+  hasValue = {
     profileName: document.querySelector('.profile__name'),
     profileProfession: document.querySelector('.profile__profession'),
     inputName: document.querySelector('.popup__input_type_name'),
@@ -35,3 +32,7 @@ function getValue() {
   };
   return hasValue;
 }
+
+profileEditOpen.addEventListener('click', openProfileEdit);
+popupEditSave.addEventListener('click', savePopupEdit);
+popupEditClose.addEventListener('click', closePopupEdit);
