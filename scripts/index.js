@@ -1,5 +1,5 @@
 let profileEditOpen = document.querySelector('.profile__edit');
-let popupEditSave = document.querySelector('.popup__save-button');
+let popupEditSave = document.querySelector('.popup__button');
 let popupEditClose = document.querySelector('.popup__close');
 let popup = document.querySelector('.popup');
 let hasValue = {};
