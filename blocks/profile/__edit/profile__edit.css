@@ -1,4 +1,6 @@
 .profile__edit {
+  border: none;
+  padding: 0;
   width: 24px;
   height: 24px;
   background: url(../../../images/profile-edit-button.svg);

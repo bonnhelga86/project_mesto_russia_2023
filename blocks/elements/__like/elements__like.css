@@ -1,4 +1,6 @@
 .elements__like {
+  border: none;
+  padding: 0;
   position: absolute;
   width: 22px;
   height: 19px;
