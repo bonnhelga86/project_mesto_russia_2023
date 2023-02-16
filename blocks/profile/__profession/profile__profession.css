@@ -24,6 +24,7 @@
 
 @media screen and (max-width: 457px) {
   .profile__profession {
+    max-width: 189px;
     font-size: 14px;
     line-height: 17px;
   }
