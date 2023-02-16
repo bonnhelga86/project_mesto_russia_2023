@@ -1,8 +1,18 @@
 .footer {
+  min-width: 100%;
   max-width: 880px;
+  box-sizing: border-box;
   margin: 0 auto;
   padding: 0 200px 60px;
   color: #545454;
+  flex-shrink: 0;
+}
+
+@media screen and (min-width: 1297px) {
+  .footer {
+    min-width: 880px;
+    box-sizing: content-box;
+  }
 }
 
 @media screen and (max-width: 1141px) {
