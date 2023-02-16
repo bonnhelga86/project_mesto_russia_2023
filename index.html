@@ -29,31 +29,6 @@
         </section>
       <!-- Конец секции Profile -->
 
-      <!-- Начало блока Popup -->
-
-      <section class="popup">
-        <div class="popup__container">
-          <button class="popup__close" type="button" aria-label="Закрыть"></button>
-          <h2 class="popup__title">Редактировать профиль</h2>
-          <form class="popup__form">
-            <input
-              name="profile-name"
-              type="text"
-              class="popup__input popup__input_type_name"
-              placeholder="Ваше имя"
-            >
-            <input
-              name="profile-profession"
-              type="text"
-              class="popup__input popup__input_type_profession"
-              placeholder="Ваш тип деятельности"
-            >
-            <button class="popup__save-button" type="submit">Сохранить</button>
-          </form>
-        </div>
-      </section>
-      <!-- Конец блока Popup -->
-
       <!-- Начало секции Elements -->
       <section class="elements">
         <ul class="elements__list-item">
@@ -110,6 +85,32 @@
       <p class="footer__copy">&copy; 2023 Mesto Russia</p>
     </footer>
     <!-- Конец блока Footer -->
+
+    <!-- Начало блока Popup -->
+    <div class="popup">
+      <div class="popup__container">
+        <button class="popup__close" type="button" aria-label="Закрыть"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form class="popup__form" name="profile-form">
+          <input
+            name="profile-name"
+            type="text"
+            class="popup__input popup__input_type_name"
+            placeholder="Ваше имя"
+            required
+          >
+          <input
+            name="profile-profession"
+            type="text"
+            class="popup__input popup__input_type_profession"
+            placeholder="Ваш тип деятельности"
+            required
+          >
+          <button class="popup__save-button" type="submit">Сохранить</button>
+        </form>
+      </div>
+    </div>
+    <!-- Конец блока Popup -->
 
     <script src="./index.js"></script>
   </body>
