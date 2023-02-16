@@ -3,7 +3,7 @@
   max-width: 880px;
   box-sizing: border-box;
   margin: 0 auto;
-  padding: 45px 200px 15px;
+  padding: 45px 200px 40px;
   min-height: 74px;
   font-size: 0;
 }
@@ -46,7 +46,7 @@
 
 @media screen and (max-width: 457px) {
   .header {
-    padding: 28px 0 17px;
+    padding: 28px 0 42px;
   }
 
   .header::after {
