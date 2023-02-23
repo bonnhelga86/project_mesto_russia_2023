@@ -32,7 +32,7 @@
       <!-- Начало секции Elements -->
       <section class="elements">
         <ul class="elements__list-item">
-          <li class="elements__item">
+    <!--  <li class="elements__item">
             <img src="./images/Altay.jpg" alt="Река в ущелье" class="elements__photo">
             <div class="elements__content">
               <button class="elements__like" type="button" aria-label="Лайкнуть"></button>
@@ -73,7 +73,7 @@
               <button class="elements__like" type="button" aria-label="Лайкнуть"></button>
               <h2 class="elements__title">Байкал</h2>
             </div>
-          </li>
+          </li> -->
         </ul>
       </section>
       <!-- Конец секции Elements -->
@@ -112,6 +112,17 @@
     </div>
     <!-- Конец блока Popup -->
 
+    <!-- Начало блока template -->
+    <template id="elements__template">
+      <li class="elements__item">
+        <img src="#" alt="#" class="elements__photo">
+        <div class="elements__content">
+          <button class="elements__like" type="button" aria-label="Лайкнуть"></button>
+          <h2 class="elements__title"></h2>
+        </div>
+      </li>
+    </template>
+    <!-- Конец блока template -->
     <script src="./scripts/index.js"></script>
   </body>
 </html>
