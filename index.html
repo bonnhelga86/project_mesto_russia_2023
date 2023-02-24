@@ -112,6 +112,32 @@
     </div>
     <!-- Конец блока Popup -->
 
+    <!-- Начало блока Popup-card -->
+    <div class="popup">
+      <div class="popup__container">
+        <button class="popup__close" type="button" aria-label="Закрыть"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__form" name="card-form">
+          <input
+            name="card-name"
+            type="text"
+            class="popup__input popup__input_type_card-name"
+            placeholder="Название"
+            required
+          >
+          <input
+            name="card-link"
+            type="text"
+            class="popup__input popup__input_type_card-link"
+            placeholder="Ссылка на картинку"
+            required
+          >
+          <button class="button popup__button" type="submit">Создать</button>
+        </form>
+      </div>
+    </div>
+    <!-- Конец блока Popup-card -->
+
     <!-- Начало блока template -->
     <template id="elements__template">
       <li class="elements__item">
