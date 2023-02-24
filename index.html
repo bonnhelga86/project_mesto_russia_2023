@@ -20,61 +20,18 @@
           <div class="profile__content">
             <img src="./images/profile-image.jpg" alt="Жак-Ив Кусто" class="profile__image">
             <div class="profile__info">
-              <button class="profile__edit" type="button" aria-label="Редактировать"></button>
+              <button class="profile__edit popup-open popup-open_profile" type="button" aria-label="Редактировать"></button>
               <h1 class="profile__name">Жак-Ив Кусто</h1>
               <p class="profile__profession">Исследователь океана</p>
             </div>
           </div>
-          <button class="button profile__button" type="button" aria-label="Добавить"></button>
+          <button class="button profile__button popup-open popup-open_card" type="button" aria-label="Добавить"></button>
         </section>
       <!-- Конец секции Profile -->
 
       <!-- Начало секции Elements -->
       <section class="elements">
-        <ul class="elements__list-item">
-    <!--  <li class="elements__item">
-            <img src="./images/Altay.jpg" alt="Река в ущелье" class="elements__photo">
-            <div class="elements__content">
-              <button class="elements__like" type="button" aria-label="Лайкнуть"></button>
-              <h2 class="elements__title">Алтай</h2>
-            </div>
-          </li>
-          <li class="elements__item">
-            <img src="./images/Kareliia.jpg" alt="Лес по берегам каналов" class="elements__photo">
-            <div class="elements__content">
-              <button class="elements__like" type="button" aria-label="Лайкнуть"></button>
-              <h2 class="elements__title">Карелия</h2>
-            </div>
-          </li>
-          <li class="elements__item">
-            <img src="./images/Kamchatka.jpg" alt="Заснеженная гора в облаках" class="elements__photo">
-            <div class="elements__content">
-              <button class="elements__like" type="button" aria-label="Лайкнуть"></button>
-              <h2 class="elements__title">Камчатка</h2>
-            </div>
-          </li>
-          <li class="elements__item">
-            <img src="./images/Karachaevo.jpg" alt="Лес в горном ущелье" class="elements__photo">
-            <div class="elements__content">
-              <button class="elements__like" type="button" aria-label="Лайкнуть"></button>
-              <h2 class="elements__title">Карачаево-Черкессия</h2>
-            </div>
-          </li>
-          <li class="elements__item">
-            <img src="./images/Kavkaz.jpg" alt="Заснеженный Эльбрус" class="elements__photo">
-            <div class="elements__content">
-              <button class="elements__like" type="button" aria-label="Лайкнуть"></button>
-              <h2 class="elements__title">Кавказ</h2>
-            </div>
-          </li>
-          <li class="elements__item">
-            <img src="./images/Baykal.jpg" alt="Озеро Байкал в льдинах" class="elements__photo">
-            <div class="elements__content">
-              <button class="elements__like" type="button" aria-label="Лайкнуть"></button>
-              <h2 class="elements__title">Байкал</h2>
-            </div>
-          </li> -->
-        </ul>
+        <ul class="elements__list-item"></ul>
       </section>
       <!-- Конец секции Elements -->
     </main>
@@ -87,7 +44,7 @@
     <!-- Конец блока Footer -->
 
     <!-- Начало блока Popup -->
-    <div class="popup">
+    <div class="popup popup-profile">
       <div class="popup__container">
         <button class="popup__close" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
@@ -113,7 +70,7 @@
     <!-- Конец блока Popup -->
 
     <!-- Начало блока Popup-card -->
-    <div class="popup">
+    <div class="popup popup-card">
       <div class="popup__container">
         <button class="popup__close" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Новое место</h2>
