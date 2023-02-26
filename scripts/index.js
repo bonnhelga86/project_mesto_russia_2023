@@ -104,7 +104,7 @@ function renderPopup(type, values={}) {
   buttonSubmit.classList.add('button', 'popup__button', 'save-popup');
   popupForm.append(buttonSubmit);
 
-  popupForm.addEventListener('submit', submitHandler);
+  popupForm.addEventListener('submit', submitHandler, { once: true });
 
   openPopup();
 }
@@ -120,6 +120,7 @@ function submitProfile(event) {
   const formData = new FormData(event.target);
   profileName.textContent = formData.get('profile-name');
   profileProfession.textContent = formData.get('profile-profession');
+  console.log(profileName, profileProfession);
   closePopup();
 }
 
