@@ -11,6 +11,7 @@ const profileProfession = document.querySelector('.profile__profession');
 const cardList = document.querySelector('.elements__list-item');
 const cardTemplate = document.querySelector('#elements__template').content;
 
+// База данных карточек
 const cards = [
   {
     name: 'Алтай',
@@ -38,6 +39,7 @@ const cards = [
   }
 ];
 
+// Настройки для элементов формы Popup
 const popupOptions = {
   profile: () => ({
     title: 'Редактировать профиль',
@@ -62,7 +64,7 @@ const popupOptions = {
     buttonText: 'Сохранить',
     submitHandler: submitProfile,
   }),
-  card: (values) => ({
+  card: () => ({
     title: 'Новое место',
     fields: [
       {
@@ -70,16 +72,14 @@ const popupOptions = {
         type: 'text',
         placeholder: 'Название',
         class: 'popup__input popup__input_type_card-name',
-        required: true,
-        value: values['card-name'] || ''
+        required: true
       },
       {
         name: 'card-link',
         type: 'text',
         placeholder: 'Ссылка на картинку',
         class: 'popup__input popup__input_type_card-link',
-        required: true,
-        value: values['card-link'] || ''
+        required: true
       }
     ],
     buttonText: 'Создать',
@@ -88,9 +88,8 @@ const popupOptions = {
 }
 
 // Функция динамического заполнения и отображения полей формы для Popup
-function renderPopup(type, values={}) {
-  // Values для предзаполнения карточек exapmple {name: value,...}
-  const { title, fields, buttonText, submitHandler } = popupOptions[type](values) || {};
+function renderPopup(type) {
+  const { title, fields, buttonText, submitHandler } = popupOptions[type]() || {};
   popup.querySelector('.popup__title').textContent = title;
   // Добавление input в форму Popup
   fields.forEach(inputAttributes => {
@@ -105,7 +104,7 @@ function renderPopup(type, values={}) {
 
   popupForm.append(buttonSubmit);
 
-  popupForm.addEventListener('submit', submitHandler, { once: true });
+  popupForm.addEventListener('submit', submitHandler, {once: true});
 
   openPopup();
 }
@@ -145,25 +144,25 @@ function closePopup() {
 
 // Функция генерирования карточек
 function renderCards() {
-  let index = 0;
+    cards.forEach( (card, index) => {
+      const cardItem = cardTemplate.querySelector('.elements__item').cloneNode(true);
 
-  cards.forEach(function(card) {
-    const cardItem = cardTemplate.querySelector('.elements__item').cloneNode(true);
+      const cardImage = cardItem.querySelector('.elements__photo');
+      cardImage.src = card.link;
+      cardImage.alt = card.name;
+      cardItem.querySelector('.elements__title').textContent = card.name;
 
-    cardItem.querySelector('.elements__photo').src = card.link;
-    cardItem.querySelector('.elements__title').textContent = card.name;
+      cardItem.querySelector('.elements__like').addEventListener('click', (event) => event.target.classList.toggle('elements__like_type_active'));
 
-    cardItem.querySelector('.elements__like').addEventListener('click', (event) => event.target.classList.toggle('elements__like_type_active'));
+      const buttonDelete = cardItem.querySelector('.elements__trash');
+      buttonDelete.setAttribute('data-key', index);
+      buttonDelete.addEventListener('click', (event) => deleteCards(event.target.getAttribute('data-key')));
 
-    const buttonDelete = cardItem.querySelector('.elements__trash');
-    buttonDelete.setAttribute('data-key', index);
-    buttonDelete.addEventListener('click', (event) => deleteCards(event.target.getAttribute('data-key')));
-
-    cardList.append(cardItem);
-    index += 1;
+      cardList.append(cardItem);
   })
 }
 
+// Функция удаления карточек
 function deleteCards(index) {
   cards.splice(index, 1);
   cardList.innerHTML='';
@@ -174,13 +173,8 @@ renderCards();
 
 // Устанавливаются слушатели событий
 popupOpen.forEach(function(element) {
-  element.addEventListener('click', (event) => renderPopup(event.target.getAttribute('data-popup-type')));
+  element.addEventListener('click', event => renderPopup(event.target.getAttribute('data-popup-type')));
 })
-
-//Другой вариант вызова функции Popup
-// popupOpen.forEach(function(element) {
-//   element.addEventListener('click', ({ target }) => renderPopup(target.getAttribute('data-popup-type')));
-// })
 
 popupClose.forEach(function(element) {
   element.addEventListener('click', (event) => closePopup(event.target.closest('.popup')))
