@@ -126,8 +126,15 @@ function submitProfile(event) {
 // Функция при Submit Card
 function submitCard(event) {
   event.preventDefault();
-  console.log(event);
-
+  const formData = new FormData(event.target);
+  cards.unshift({
+    name: formData.get('card-name'),
+    link: formData.get('card-link')
+  });
+  console.log(cards);
+  closePopup();
+  cardList.innerHTML='';
+  renderCards();
 }
 
 // Функция закрывания Popup
