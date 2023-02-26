@@ -1,8 +1,8 @@
+// Элементы блока Popup
 const popup = document.querySelector('.popup');
 const popupForm = popup.querySelector('form');
 // Элементы взаимодействия с Popup
 const popupOpen = document.querySelectorAll('.popup-open');
-const popupEditSave = document.querySelector('.popup__button');
 const popupClose = document.querySelectorAll('.popup__close');
 // Элементы блока Profile
 const profileName = document.querySelector('.profile__name');
@@ -102,6 +102,7 @@ function renderPopup(type, values={}) {
   const buttonSubmit = document.createElement('button');
   buttonSubmit.textContent = buttonText;
   buttonSubmit.classList.add('button', 'popup__button', 'save-popup');
+
   popupForm.append(buttonSubmit);
 
   popupForm.addEventListener('submit', submitHandler, { once: true });
@@ -120,7 +121,6 @@ function submitProfile(event) {
   const formData = new FormData(event.target);
   profileName.textContent = formData.get('profile-name');
   profileProfession.textContent = formData.get('profile-profession');
-  console.log(profileName, profileProfession);
   closePopup();
 }
 
@@ -132,7 +132,6 @@ function submitCard(event) {
     name: formData.get('card-name'),
     link: formData.get('card-link')
   });
-  console.log(cards);
   closePopup();
   cardList.innerHTML='';
   renderCards();
@@ -146,14 +145,29 @@ function closePopup() {
 
 // Функция генерирования карточек
 function renderCards() {
-  // cardList === '' && clearList(cardList.children);
+  let index = 0;
 
   cards.forEach(function(card) {
     const cardItem = cardTemplate.querySelector('.elements__item').cloneNode(true);
+
     cardItem.querySelector('.elements__photo').src = card.link;
     cardItem.querySelector('.elements__title').textContent = card.name;
+
+    cardItem.querySelector('.elements__like').addEventListener('click', (event) => event.target.classList.toggle('elements__like_type_active'));
+
+    const buttonDelete = cardItem.querySelector('.elements__trash');
+    buttonDelete.setAttribute('data-key', index);
+    buttonDelete.addEventListener('click', (event) => deleteCards(event.target.getAttribute('data-key')));
+
     cardList.append(cardItem);
+    index += 1;
   })
+}
+
+function deleteCards(index) {
+  cards.splice(index, 1);
+  cardList.innerHTML='';
+  renderCards();
 }
 
 renderCards();
