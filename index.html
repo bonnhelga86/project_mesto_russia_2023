@@ -20,12 +20,12 @@
           <div class="profile__content">
             <img src="./images/profile-image.jpg" alt="Жак-Ив Кусто" class="profile__image">
             <div class="profile__info">
-              <button class="profile__edit popup-open popup-open_profile" type="button" aria-label="Редактировать"></button>
+              <button class="profile__edit popup-open" data-popup-type="profile" type="button" aria-label="Редактировать"></button>
               <h1 class="profile__name">Жак-Ив Кусто</h1>
               <p class="profile__profession">Исследователь океана</p>
             </div>
           </div>
-          <button class="button profile__button popup-open popup-open_card" type="button" aria-label="Добавить"></button>
+          <button class="button profile__button popup-open" data-popup-type="card" type="button" aria-label="Добавить"></button>
         </section>
       <!-- Конец секции Profile -->
 
@@ -44,7 +44,19 @@
     <!-- Конец блока Footer -->
 
     <!-- Начало блока Popup -->
-    <div class="popup popup-profile">
+    <div class="popup">
+      <div class="popup__container">
+        <button class="popup__close" type="button" aria-label="Закрыть"></button>
+        <h2 class="popup__title"></h2>
+        <form class="popup__form" name="profile-form">
+
+        </form>
+      </div>
+    </div>
+    <!-- Конец блока Popup -->
+
+    <!-- Начало блока Popup -->
+    <!-- <div class="popup popup-profile">
       <div class="popup__container">
         <button class="popup__close" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
@@ -63,14 +75,14 @@
             placeholder="Ваш тип деятельности"
             required
           >
-          <button class="button popup__button" type="submit">Сохранить</button>
+          <button class="button popup__button save-popup" type="submit">Сохранить</button>
         </form>
       </div>
-    </div>
+    </div> -->
     <!-- Конец блока Popup -->
 
     <!-- Начало блока Popup-card -->
-    <div class="popup popup-card">
+    <!-- <div class="popup popup-card">
       <div class="popup__container">
         <button class="popup__close" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Новое место</h2>
@@ -89,10 +101,10 @@
             placeholder="Ссылка на картинку"
             required
           >
-          <button class="button popup__button" type="submit">Создать</button>
+          <button class="button popup__button save-popup" type="submit">Создать</button>
         </form>
       </div>
-    </div>
+    </div> -->
     <!-- Конец блока Popup-card -->
 
     <!-- Начало блока template -->
