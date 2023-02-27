@@ -1,7 +1,7 @@
 // Элементы блока Popup
 const popupForm = document.querySelector('.popup-form');
 const popupImage = document.querySelector('.popup-image');
-const form = popupForm.querySelector('form');
+const form = popupForm.querySelector('.popup-form__form');
 // Элементы взаимодействия с Popup
 const popupOpen = document.querySelectorAll('.popup-open');
 const popupClose = document.querySelectorAll('.popup__close');
@@ -49,7 +49,7 @@ const popupOptions = {
         name: 'profile-name',
         type: 'text',
         placeholder: 'Ваше имя',
-        class: 'popup__input popup__input_type_name',
+        class: 'popup-form__input popup-form__input_type_name',
         required: true,
         value: profileName.textContent
       },
@@ -57,7 +57,7 @@ const popupOptions = {
         name: 'profile-profession',
         type: 'text',
         placeholder: 'Ваш тип деятельности',
-        class: 'popup__input popup__input_type_profession',
+        class: 'popup-form__input popup-form__input_type_profession',
         required: true,
         value: profileProfession.textContent
       }
@@ -72,14 +72,14 @@ const popupOptions = {
         name: 'card-name',
         type: 'text',
         placeholder: 'Название',
-        class: 'popup__input popup__input_type_card-name',
+        class: 'popup-form__input popup-form__input_type_card-name',
         required: true
       },
       {
         name: 'card-link',
         type: 'text',
         placeholder: 'Ссылка на картинку',
-        class: 'popup__input popup__input_type_card-link',
+        class: 'popup-form__input popup-form__input_type_card-link',
         required: true
       }
     ],
@@ -91,7 +91,7 @@ const popupOptions = {
 // Функция динамического заполнения и отображения полей формы для Popup
 function renderFormPopup(type) {
   const { title, fields, buttonText, submitHandler } = popupOptions[type]() || {};
-  popupForm.querySelector('.popup__title').textContent = title;
+  popupForm.querySelector('.popup-form__title').textContent = title;
   // Добавление input в форму Popup
   fields.forEach(inputAttributes => {
     const input = document.createElement('input');
@@ -101,7 +101,7 @@ function renderFormPopup(type) {
   // Добавление кнопки submit в форму Popup
   const buttonSubmit = document.createElement('button');
   buttonSubmit.textContent = buttonText;
-  buttonSubmit.classList.add('button', 'popup__button', 'save-popup');
+  buttonSubmit.classList.add('button', 'popup-form__button', 'save-popup');
 
   form.append(buttonSubmit);
 
