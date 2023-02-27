@@ -167,9 +167,11 @@ function renderCards() {
 
       cardItem.querySelector('.elements__title').textContent = card.name;
 
-      cardItem.querySelector('.elements__like').addEventListener('click', event => {
+      const buttonLike = cardItem.querySelector('.elements__like');
+      card.liked && buttonLike.classList.add('elements__like_type_active');
+      buttonLike.addEventListener('click', event => {
         event.stopPropagation();
-        likesCards(event.target);
+        likesCards(event.target, index);
       });
 
       const buttonDelete = cardItem.querySelector('.elements__trash');
@@ -185,7 +187,8 @@ function renderCards() {
 }
 
 // Функция лайка карточек
-function likesCards(card) {
+function likesCards(card, index) {
+  cards[index].liked =! cards[index].liked;
   card.classList.toggle('elements__like_type_active');
 }
 
