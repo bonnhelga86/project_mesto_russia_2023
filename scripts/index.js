@@ -122,6 +122,8 @@ function renderPhotoPopup(index) {
 
 // Функция открывания Popup
 function openPopup(popup) {
+  popup.classList.contains('popup_hidden') && popup.classList.remove('popup_hidden');
+  // popup.classList.remove('popup_hidden');
   popup.classList.add('popup_opened');
 }
 
