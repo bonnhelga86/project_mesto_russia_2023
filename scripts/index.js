@@ -3,8 +3,8 @@ const popupForm = document.querySelector('.popup-form');
 const popupImage = document.querySelector('.popup-image');
 const form = popupForm.querySelector('.popup-form__form');
 // Элементы взаимодействия с Popup
-const popupOpen = document.querySelectorAll('.popup-open');
-const popupClose = document.querySelectorAll('.popup__close');
+const popupOpenList = document.querySelectorAll('.popup-open');
+const popupCloseList = document.querySelectorAll('.popup__close');
 // Элементы блока Profile
 const profileName = document.querySelector('.profile__name');
 const profileProfession = document.querySelector('.profile__profession');
@@ -63,7 +63,6 @@ const popupOptions = {
       }
     ],
     buttonText: 'Сохранить',
-    submitHandler: submitProfile,
   }),
   card: () => ({
     title: 'Новое место',
@@ -84,7 +83,6 @@ const popupOptions = {
       }
     ],
     buttonText: 'Создать',
-    submitHandler: submitCard,
   })
 }
 
@@ -105,7 +103,7 @@ function renderFormPopup(type) {
 
   form.append(buttonSubmit);
 
-  form.addEventListener('submit', submitHandler, {once: true});
+  form.addEventListener('submit', submitGetData, {once: true});
 
   openPopup(popupForm);
 }
@@ -113,8 +111,9 @@ function renderFormPopup(type) {
 // Функция заполнения Popup для картинки
 function renderPhotoPopup(index) {
   const { name, link } = cards[index] || {};
-  popupImage.querySelector('.popup-image__photo').src = link;
-  popupImage.querySelector('.popup-image__photo').alt = name;
+  popupImagePhoto = popupImage.querySelector('.popup-image__photo');
+  popupImagePhoto.src = link;
+  popupImagePhoto.alt = name;
   popupImage.querySelector('.popup-image__caption').textContent = name;
 
   openPopup(popupImage);
@@ -123,23 +122,31 @@ function renderPhotoPopup(index) {
 // Функция открывания Popup
 function openPopup(popup) {
   popup.classList.contains('popup_hidden') && popup.classList.remove('popup_hidden');
-  // popup.classList.remove('popup_hidden');
   popup.classList.add('popup_opened');
 }
 
-// Функция при Submit Profile
-function submitProfile(event) {
+// Функция закрывания Popup
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+  form.innerHTML='';
+}
+
+// Функция сбора данных из полей форм
+function submitGetData(event) {
   event.preventDefault();
   const formData = new FormData(event.target);
+  formData.has('profile-name') ? submitProfile(formData) : submitCard(formData);
+}
+
+// Функция при Submit Profile
+function submitProfile(formData) {
   profileName.textContent = formData.get('profile-name');
   profileProfession.textContent = formData.get('profile-profession');
   closePopup(popupForm);
 }
 
 // Функция при Submit Card
-function submitCard(event) {
-  event.preventDefault();
-  const formData = new FormData(event.target);
+function submitCard(formData) {
   cards.unshift({
     name: formData.get('card-name'),
     link: formData.get('card-link')
@@ -147,12 +154,6 @@ function submitCard(event) {
   closePopup(popupForm);
   cardList.innerHTML='';
   renderCards();
-}
-
-// Функция закрывания Popup
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-  form.innerHTML='';
 }
 
 // Функция генерирования карточек
@@ -198,10 +199,10 @@ function deleteCards(index) {
 renderCards();
 
 // Устанавливаются слушатели событий
-popupOpen.forEach(function(element) {
+popupOpenList.forEach(function(element) {
   element.addEventListener('click', event => renderFormPopup(event.target.getAttribute('data-popup-type')));
 })
 
-popupClose.forEach(function(element) {
+popupCloseList.forEach(function(element) {
   element.addEventListener('click', (event) => closePopup(event.target.closest('.popup')))
 })
