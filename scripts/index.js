@@ -1,6 +1,7 @@
 // Элементы блока Popup
-const popup = document.querySelector('.popup');
-const popupForm = popup.querySelector('form');
+const popupForm = document.querySelector('.popup_form');
+const popupImage = document.querySelector('.popup_image');
+const form = popupForm.querySelector('form');
 // Элементы взаимодействия с Popup
 const popupOpen = document.querySelectorAll('.popup-open');
 const popupClose = document.querySelectorAll('.popup__close');
@@ -90,27 +91,34 @@ const popupOptions = {
 // Функция динамического заполнения и отображения полей формы для Popup
 function renderPopup(type) {
   const { title, fields, buttonText, submitHandler } = popupOptions[type]() || {};
-  popup.querySelector('.popup__title').textContent = title;
+  popupForm.querySelector('.popup__title').textContent = title;
   // Добавление input в форму Popup
   fields.forEach(inputAttributes => {
     const input = document.createElement('input');
     Object.keys(inputAttributes).forEach( key => input.setAttribute(key, inputAttributes[key]) );
-    popupForm.append(input);
+    form.append(input);
   })
   // Добавление кнопки submit в форму Popup
   const buttonSubmit = document.createElement('button');
   buttonSubmit.textContent = buttonText;
   buttonSubmit.classList.add('button', 'popup__button', 'save-popup');
 
-  popupForm.append(buttonSubmit);
+  form.append(buttonSubmit);
 
-  popupForm.addEventListener('submit', submitHandler, {once: true});
+  form.addEventListener('submit', submitHandler, {once: true});
 
-  openPopup();
+  openPopup(popupForm);
 }
 
-// Функция открывания Popup
-function openPopup() {
+// Функция заполнения Popup для картинки
+function renderPhotoPopup(card) {
+  const { name, link } = card || {};
+
+  openPopup(popupImage);
+}
+
+// Функция открывания Popup для форм
+function openPopup(popup) {
   popup.classList.add('popup_opened');
 }
 
@@ -120,7 +128,7 @@ function submitProfile(event) {
   const formData = new FormData(event.target);
   profileName.textContent = formData.get('profile-name');
   profileProfession.textContent = formData.get('profile-profession');
-  closePopup();
+  closePopup(popupForm);
 }
 
 // Функция при Submit Card
@@ -131,15 +139,15 @@ function submitCard(event) {
     name: formData.get('card-name'),
     link: formData.get('card-link')
   });
-  closePopup();
+  closePopup(popupForm);
   cardList.innerHTML='';
   renderCards();
 }
 
 // Функция закрывания Popup
-function closePopup() {
+function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  popupForm.innerHTML='';
+  form.innerHTML='';
 }
 
 // Функция генерирования карточек
@@ -150,14 +158,16 @@ function renderCards() {
       const cardImage = cardItem.querySelector('.elements__photo');
       cardImage.src = card.link;
       cardImage.alt = card.name;
+
       cardItem.querySelector('.elements__title').textContent = card.name;
 
-      cardItem.querySelector('.elements__like').addEventListener('click', (event) => event.target.classList.toggle('elements__like_type_active'));
+      cardItem.querySelector('.elements__like').addEventListener('click', event => event.target.classList.toggle('elements__like_type_active'));
 
       const buttonDelete = cardItem.querySelector('.elements__trash');
       buttonDelete.setAttribute('data-key', index);
-      buttonDelete.addEventListener('click', (event) => deleteCards(event.target.getAttribute('data-key')));
+      buttonDelete.addEventListener('click', event => deleteCards(event.target.getAttribute('data-key')));
 
+      cardItem.addEventListener('click', event => renderPhotoPopup(card));
       cardList.append(cardItem);
   })
 }
