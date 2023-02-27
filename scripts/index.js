@@ -1,6 +1,6 @@
 // Элементы блока Popup
-const popupForm = document.querySelector('.popup_form');
-const popupImage = document.querySelector('.popup_image');
+const popupForm = document.querySelector('.popup-form');
+const popupImage = document.querySelector('.popup-image');
 const form = popupForm.querySelector('form');
 // Элементы взаимодействия с Popup
 const popupOpen = document.querySelectorAll('.popup-open');
@@ -89,7 +89,7 @@ const popupOptions = {
 }
 
 // Функция динамического заполнения и отображения полей формы для Popup
-function renderPopup(type) {
+function renderFormPopup(type) {
   const { title, fields, buttonText, submitHandler } = popupOptions[type]() || {};
   popupForm.querySelector('.popup__title').textContent = title;
   // Добавление input в форму Popup
@@ -111,13 +111,16 @@ function renderPopup(type) {
 }
 
 // Функция заполнения Popup для картинки
-function renderPhotoPopup(card) {
-  const { name, link } = card || {};
+function renderPhotoPopup(index) {
+  const { name, link } = cards[index] || {};
+  popupImage.querySelector('.popup-image__photo').src = link;
+  popupImage.querySelector('.popup-image__photo').alt = name;
+  popupImage.querySelector('.popup-image__caption').textContent = name;
 
   openPopup(popupImage);
 }
 
-// Функция открывания Popup для форм
+// Функция открывания Popup
 function openPopup(popup) {
   popup.classList.add('popup_opened');
 }
@@ -161,15 +164,26 @@ function renderCards() {
 
       cardItem.querySelector('.elements__title').textContent = card.name;
 
-      cardItem.querySelector('.elements__like').addEventListener('click', event => event.target.classList.toggle('elements__like_type_active'));
+      cardItem.querySelector('.elements__like').addEventListener('click', event => {
+        event.stopPropagation();
+        likesCards(event.target);
+      });
 
       const buttonDelete = cardItem.querySelector('.elements__trash');
       buttonDelete.setAttribute('data-key', index);
-      buttonDelete.addEventListener('click', event => deleteCards(event.target.getAttribute('data-key')));
+      buttonDelete.addEventListener('click', event => {
+        event.stopPropagation();
+        deleteCards(event.target.getAttribute('data-key'));
+      });
 
-      cardItem.addEventListener('click', event => renderPhotoPopup(card));
+      cardItem.addEventListener('click', event => renderPhotoPopup(index));
       cardList.append(cardItem);
   })
+}
+
+// Функция лайка карточек
+function likesCards(card) {
+  card.classList.toggle('elements__like_type_active');
 }
 
 // Функция удаления карточек
@@ -183,7 +197,7 @@ renderCards();
 
 // Устанавливаются слушатели событий
 popupOpen.forEach(function(element) {
-  element.addEventListener('click', event => renderPopup(event.target.getAttribute('data-popup-type')));
+  element.addEventListener('click', event => renderFormPopup(event.target.getAttribute('data-popup-type')));
 })
 
 popupClose.forEach(function(element) {
