@@ -88,6 +88,7 @@ function submitCard(formData) {
   ];
   renderCards(card);
   closePopup(popupCard);
+  formCard.reset();
 }
 
 // Функция заполнения Popup для картинки
