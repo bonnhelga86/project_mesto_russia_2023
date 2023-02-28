@@ -20,12 +20,12 @@
           <div class="profile__content">
             <img src="./images/profile-image.jpg" alt="Жак-Ив Кусто" class="profile__image">
             <div class="profile__info">
-              <button class="profile__edit popup-open" data-popup-type="profile" type="button" aria-label="Редактировать"></button>
+              <button class="profile__edit" type="button" aria-label="Редактировать"></button>
               <h1 class="profile__name">Жак-Ив Кусто</h1>
               <p class="profile__profession">Исследователь океана</p>
             </div>
           </div>
-          <button class="button profile__button popup-open" data-popup-type="card" type="button" aria-label="Добавить"></button>
+          <button class="button profile__button" type="button" aria-label="Добавить"></button>
         </section>
       <!-- Конец секции Profile -->
 
@@ -47,7 +47,7 @@
     <div class="popup popup_hidden popup-profile">
       <div class="popup__container popup__container_type_form">
         <button class="popup__close" type="button" aria-label="Закрыть"></button>
-        <h2 class="popup__title"></h2>
+        <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup-profile__form  form" name="profile-form">
           <input
             name="profile-name"
@@ -63,7 +63,7 @@
             class="form__input"
             required
           >
-          <button class="button popup__button save-popup">Сохранить</button>
+          <button class="button popup__button">Сохранить</button>
         </form>
       </div>
     </div>
@@ -73,30 +73,30 @@
     <div class="popup popup_hidden popup-card">
       <div class="popup__container popup__container_type_form">
         <button class="popup__close" type="button" aria-label="Закрыть"></button>
-        <h2 class="popup__title"></h2>
+        <h2 class="popup__title">Новое место</h2>
         <form class="popup-card__form  form" name="card-form">
           <input
             name="card-name"
             type="text"
-            placeholder="Ваше имя"
+            placeholder="Название"
             class="form__input"
             required
           >
           <input
-            name="card-profession"
+            name="card-link"
             type="text"
-            placeholder="Ваш тип деятельности"
+            placeholder="Ссылка на картинку"
             class="form__input"
             required
           >
-          <button class="button popup__button save-popup">Создать</button>
+          <button class="button popup__button">Создать</button>
         </form>
       </div>
     </div>
     <!-- Конец блока Popup-card -->
 
     <!-- Начало блока Popup-image -->
-    <div class="popup popup-image popup_hidden">
+    <div class="popup popup_hidden popup-image">
       <div class="popup__container popup__container_type_image">
         <button class="popup__close" type="button" aria-label="Закрыть"></button>
         <figure class="popup-image__wrap">
