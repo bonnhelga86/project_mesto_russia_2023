@@ -1,4 +1,4 @@
-.popup-form__input {
+.form__input {
   padding-bottom: 9px;
   margin-bottom: 30px;
   border: none;
@@ -9,6 +9,6 @@
   line-height: 17px;
 }
 
-.popup-form__input::placeholder {
+.form__input::placeholder {
   color: #c4c4c4;
 }

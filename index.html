@@ -43,17 +43,57 @@
     </footer>
     <!-- Конец блока Footer -->
 
-    <!-- Начало блока Popup -->
-    <div class="popup popup-form popup_hidden">
+    <!-- Начало блока Popup-profile -->
+    <div class="popup popup_hidden popup-profile">
       <div class="popup__container popup__container_type_form">
         <button class="popup__close" type="button" aria-label="Закрыть"></button>
-        <h2 class="popup-form__title"></h2>
-        <form class="popup-form__form" name="profile-form">
-
+        <h2 class="popup__title"></h2>
+        <form class="popup-profile__form  form" name="profile-form">
+          <input
+            name="profile-name"
+            type="text"
+            placeholder="Ваше имя"
+            class="form__input"
+            required
+          >
+          <input
+            name="profile-profession"
+            type="text"
+            placeholder="Ваш тип деятельности"
+            class="form__input"
+            required
+          >
+          <button class="button popup__button save-popup">Сохранить</button>
         </form>
       </div>
     </div>
-    <!-- Конец блока Popup -->
+    <!-- Конец блока Popup-profile -->
+
+    <!-- Начало блока Popup-card -->
+    <div class="popup popup_hidden popup-card">
+      <div class="popup__container popup__container_type_form">
+        <button class="popup__close" type="button" aria-label="Закрыть"></button>
+        <h2 class="popup__title"></h2>
+        <form class="popup-card__form  form" name="card-form">
+          <input
+            name="card-name"
+            type="text"
+            placeholder="Ваше имя"
+            class="form__input"
+            required
+          >
+          <input
+            name="card-profession"
+            type="text"
+            placeholder="Ваш тип деятельности"
+            class="form__input"
+            required
+          >
+          <button class="button popup__button save-popup">Создать</button>
+        </form>
+      </div>
+    </div>
+    <!-- Конец блока Popup-card -->
 
     <!-- Начало блока Popup-image -->
     <div class="popup popup-image popup_hidden">
@@ -65,7 +105,7 @@
         </figure>
       </div>
     </div>
-    <!-- Конец блока Popup -->
+    <!-- Конец блока Popup-image -->
 
     <!-- Начало блока template -->
     <template id="elements__template">
