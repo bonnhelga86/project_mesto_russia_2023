@@ -118,30 +118,25 @@ function renderCards(cards) {
 }
 
 // Функция при Submit Profile
-function submitProfile(formData) {
-  profileName.textContent = formData.get('profile-name');
-  profileProfession.textContent = formData.get('profile-profession');
+function submitProfile(event) {
+  event.preventDefault();
+  profileName.textContent = formProfile['profile-name'].value;
+  profileProfession.textContent = formProfile['profile-profession'].value;
   closePopup(popupProfile);
 }
 
 // Функция при Submit Card
-function submitCard(formData) {
+function submitCard(event) {
+  event.preventDefault();
   const card = [
     {
-      name: formData.get('card-name'),
-      link: formData.get('card-link')
+      name: formCard['card-name'].value,
+      link: formCard['card-link'].value
     }
   ];
   renderCards(card);
   closePopup(popupCard);
   formCard.reset();
-}
-
-// Функция сбора данных из полей форм
-function submitGetData(event) {
-  event.preventDefault();
-  const formData = new FormData(event.target);
-  formData.has('profile-name') ? submitProfile(formData) : submitCard(formData);
 }
 
 renderCards(initialCards);
@@ -154,5 +149,5 @@ popupCloseList.forEach(function(element) {
   element.addEventListener('click', (event) => closePopup(event.target.closest('.popup')));
 });
 
-formProfile.addEventListener('submit', submitGetData);
-formCard.addEventListener('submit', submitGetData);
+formProfile.addEventListener('submit', submitProfile);
+formCard.addEventListener('submit', submitCard);
