@@ -46,17 +46,17 @@ const initialCards = [
   }
 ];
 
+// Функция открывания Popup
+function openPopup(popup) {
+  popup.classList.contains('popup_hidden') && popup.classList.remove('popup_hidden');
+  popup.classList.add('popup_opened');
+}
+
 // Функция предзаполнения input в PopupProfile
 function fillPopupProfileFields() {
   formProfile['profile-name'].value = profileName.textContent;
   formProfile['profile-profession'].value = profileProfession.textContent;
-}
-
-// Функция открывания Popup
-function openPopup(popup) {
-  popup.classList.contains('popup-profile') && fillPopupProfileFields();
-  popup.classList.contains('popup_hidden') && popup.classList.remove('popup_hidden');
-  popup.classList.add('popup_opened');
+  openPopup(popupProfile);
 }
 
 // Функция закрывания Popup
@@ -141,7 +141,7 @@ function submitGetData(event) {
 renderCards(initialCards);
 
 // Устанавливаются слушатели событий
-buttonOpenPopupProfile.addEventListener('click', () => openPopup(popupProfile));
+buttonOpenPopupProfile.addEventListener('click', () => fillPopupProfileFields());
 buttonOpenPopupCard.addEventListener('click', () => openPopup(popupCard));
 
 popupCloseList.forEach(function(element) {
