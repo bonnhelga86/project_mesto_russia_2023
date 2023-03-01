@@ -63,7 +63,7 @@ function addCard(card) {
 }
 
 // Функция генерирования карточек
-function renderCards(card) {
+function createCard(card) {
   const cardItem = cardTemplate.querySelector('.elements__item').cloneNode(true);
 
   const cardImage = cardItem.querySelector('.elements__photo');
@@ -84,12 +84,15 @@ function renderCards(card) {
 
   cardItem.addEventListener('click', () => renderPhotoPopup(card));
 
-  addCard(cardItem);
+  return cardItem;
 }
 
 // Функция перебора массива с карточками и получения данных
-function getCardData() {
-  initialCards.forEach(card => renderCards(card));
+function renderCards() {
+  initialCards.forEach(cardData => {
+    const card = createCard(cardData);
+    addCard(card);
+  });
 }
 
 // Функция при Submit Profile
@@ -103,19 +106,17 @@ function submitProfile(event) {
 // Функция при Submit Card
 function submitCard(event) {
   event.preventDefault();
-  const card = [
-    {
+  const cardData = {
       name: formCard['card-name'].value,
       link: formCard['card-link'].value
-    }
-  ];
-  renderCards(card);
+    };
+  const card = createCard(cardData);
+  addCard(card);
   closePopup(popupCard);
   formCard.reset();
 }
 
-// renderCards(initialCards);
-getCardData();
+renderCards();
 
 // Устанавливаются слушатели событий
 buttonOpenPopupProfile.addEventListener('click', () => fillPopupProfileFields());
