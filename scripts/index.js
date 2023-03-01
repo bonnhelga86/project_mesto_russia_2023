@@ -63,30 +63,33 @@ function addCard(card) {
 }
 
 // Функция генерирования карточек
-function renderCards(cards) {
-    cards.forEach( (card) => {
-      const cardItem = cardTemplate.querySelector('.elements__item').cloneNode(true);
+function renderCards(card) {
+  const cardItem = cardTemplate.querySelector('.elements__item').cloneNode(true);
 
-      const cardImage = cardItem.querySelector('.elements__photo');
-      cardImage.src = card.link;
-      cardImage.alt = card.name;
+  const cardImage = cardItem.querySelector('.elements__photo');
+  cardImage.src = card.link;
+  cardImage.alt = card.name;
 
-      cardItem.querySelector('.elements__title').textContent = card.name;
+  cardItem.querySelector('.elements__title').textContent = card.name;
 
-      cardItem.querySelector('.elements__like').addEventListener('click', event => {
-        event.stopPropagation();
-        likesCards(event.target);
-      });
+  cardItem.querySelector('.elements__like').addEventListener('click', event => {
+    event.stopPropagation();
+    likesCards(event.target);
+  });
 
-      cardItem.querySelector('.elements__trash').addEventListener('click', event => {
-        event.stopPropagation();
-        deleteCards(event.target.closest('.elements__item'));
-      });
+  cardItem.querySelector('.elements__trash').addEventListener('click', event => {
+    event.stopPropagation();
+    deleteCards(event.target.closest('.elements__item'));
+  });
 
-      cardItem.addEventListener('click', () => renderPhotoPopup(card));
+  cardItem.addEventListener('click', () => renderPhotoPopup(card));
 
-      addCard(cardItem);
-  })
+  addCard(cardItem);
+}
+
+// Функция перебора массива с карточками и получения данных
+function getCardData() {
+  initialCards.forEach(card => renderCards(card));
 }
 
 // Функция при Submit Profile
@@ -111,14 +114,15 @@ function submitCard(event) {
   formCard.reset();
 }
 
-renderCards(initialCards);
+// renderCards(initialCards);
+getCardData();
 
 // Устанавливаются слушатели событий
 buttonOpenPopupProfile.addEventListener('click', () => fillPopupProfileFields());
 buttonOpenPopupCard.addEventListener('click', () => openPopup(popupCard));
 
 popupCloseList.forEach(function(element) {
-  element.addEventListener('click', (event) => closePopup(event.target.closest('.popup')));
+  element.addEventListener('click', event => closePopup(event.target.closest('.popup')));
 });
 
 formProfile.addEventListener('submit', submitProfile);
