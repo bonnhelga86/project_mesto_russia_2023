@@ -14,6 +14,8 @@ const cardTemplate = document.querySelector('#elements__template').content;
 
 // Элементы Image
 const popupImage = document.querySelector('.popup-image');
+const popupImagePhoto = popupImage.querySelector('.popup-image__photo');
+const popupImageCaption = popupImage.querySelector('.popup-image__caption');
 
 // Список элементов для закрытия Popup
 const popupCloseList = document.querySelectorAll('.popup__close');
@@ -67,10 +69,9 @@ function closePopup(popup) {
 // Функция заполнения PopupImage
 function renderPhotoPopup(card) {
   const { name, link } = card || {};
-  const popupImagePhoto = popupImage.querySelector('.popup-image__photo');
   popupImagePhoto.src = link;
   popupImagePhoto.alt = name;
-  popupImage.querySelector('.popup-image__caption').textContent = name;
+  popupImageCaption.textContent = name;
   openPopup(popupImage);
 }
 
