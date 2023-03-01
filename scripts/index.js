@@ -20,34 +20,6 @@ const popupImageCaption = popupImage.querySelector('.popup-image__caption');
 // Список элементов для закрытия Popup
 const popupCloseList = document.querySelectorAll('.popup__close');
 
-// База данных карточек
-const initialCards = [
-  {
-    name: 'Алтай',
-    link: './images/Altay.jpg'
-  },
-  {
-    name: 'Карелия',
-    link: './images/Kareliia.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: './images/Kamchatka.jpg'
-  },
-  {
-    name: 'Карачаево-Черкессия',
-    link: './images/Karachaevo.jpg'
-  },
-  {
-    name: 'Кавказ',
-    link: './images/Kavkaz.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: './images/Baykal.jpg'
-  }
-];
-
 // Функция открывания Popup
 function openPopup(popup) {
   popup.classList.contains('popup_hidden') && popup.classList.remove('popup_hidden');
