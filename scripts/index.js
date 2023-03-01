@@ -85,6 +85,11 @@ function deleteCards(element) {
   element.remove();
 }
 
+// Функция вставки карточки в разметку
+function addCard(card) {
+  cardList.prepend(card);
+}
+
 // Функция генерирования карточек
 function renderCards(cards) {
     cards.forEach( (card) => {
@@ -108,7 +113,7 @@ function renderCards(cards) {
 
       cardItem.addEventListener('click', () => renderPhotoPopup(card));
 
-      cardList.prepend(cardItem);
+      addCard(cardItem);
   })
 }
 
