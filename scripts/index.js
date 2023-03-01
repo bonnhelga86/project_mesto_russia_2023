@@ -148,5 +148,5 @@ popupCloseList.forEach(function(element) {
   element.addEventListener('click', (event) => closePopup(event.target.closest('.popup')));
 });
 
-formProfile.addEventListener('submit', event => submitGetData(event));
-formCard.addEventListener('submit', event => submitGetData(event));
+formProfile.addEventListener('submit', submitGetData);
+formCard.addEventListener('submit', submitGetData);
