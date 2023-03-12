@@ -48,21 +48,27 @@
       <div class="popup__container popup__container_type_form">
         <button class="popup__close" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="popup-profile__form  form" name="profile-form">
+        <form class="popup-profile__form  form" name="profile-form" novalidate>
           <input
             name="profile-name"
             type="text"
             placeholder="Ваше имя"
             class="form__input"
+            minlength="2"
+            maxlength="40"
             required
           >
+          <span class="form__input-error form__input-error_type_profile-name"></span>
           <input
             name="profile-profession"
             type="text"
             placeholder="Ваш тип деятельности"
             class="form__input"
+            minlength="2"
+            maxlength="200"
             required
           >
+          <span class="form__input-error form__input-error_type_profile-profession"></span>
           <button class="button popup__button">Сохранить</button>
         </form>
       </div>
@@ -74,21 +80,25 @@
       <div class="popup__container popup__container_type_form">
         <button class="popup__close" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Новое место</h2>
-        <form class="popup-card__form  form" name="card-form">
+        <form class="popup-card__form  form" name="card-form" novalidate>
           <input
             name="card-name"
             type="text"
             placeholder="Название"
             class="form__input"
+            minlength="2"
+            maxlength="30"
             required
           >
+          <span class="form__input-error form__input-error_type_card-name"></span>
           <input
             name="card-link"
-            type="text"
+            type="url"
             placeholder="Ссылка на картинку"
             class="form__input"
             required
           >
+          <span class="form__input-error form__input-error_type_card-link"></span>
           <button class="button popup__button">Создать</button>
         </form>
       </div>
