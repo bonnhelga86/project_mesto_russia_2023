@@ -114,7 +114,7 @@ function submitCard(event) {
   addCard(card);
   closePopup(popupCard);
   formCard.reset();
-  formCard.querySelector(`${configValidation.submitButtonSelector}`).disabled = true;
+  formCard.querySelector('.popup__button').disabled = true;
 }
 
 renderCards();
