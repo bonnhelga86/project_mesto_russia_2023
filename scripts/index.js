@@ -1,3 +1,6 @@
+// Все popup на странице
+const popupList = document.querySelectorAll('.popup');
+
 // Элементы Profile
 const popupProfile = document.querySelector('.popup-profile');
 const formProfile = popupProfile.querySelector('.form');
@@ -16,9 +19,6 @@ const cardTemplate = document.querySelector('#elements__template').content;
 const popupImage = document.querySelector('.popup-image');
 const popupImagePhoto = popupImage.querySelector('.popup-image__photo');
 const popupImageCaption = popupImage.querySelector('.popup-image__caption');
-
-// Список элементов для закрытия Popup
-const popupCloseList = document.querySelectorAll('.popup__close');
 
 // Функция открывания Popup
 function openPopup(popup) {
@@ -123,8 +123,21 @@ renderCards();
 buttonOpenPopupProfile.addEventListener('click', () => fillPopupProfileFields());
 buttonOpenPopupCard.addEventListener('click', () => openPopup(popupCard));
 
-popupCloseList.forEach(function(element) {
-  element.addEventListener('click', event => closePopup(event.target.closest('.popup')));
+popupList.forEach(popup => {
+  popup.addEventListener('click', event => {
+    if (event.target.classList.contains('popup') || event.target.classList.contains('popup__close')) {
+      closePopup(popup);
+    }
+  })
+});
+
+document.addEventListener('keyup', event => {
+  if (event.key === 'Escape') {
+    const whichPopupIsOpen = Array.from(popupList).filter( (popup) => {
+      return popup.classList.contains('popup_opened');
+    });
+    whichPopupIsOpen.length === 1 && closePopup(whichPopupIsOpen[0]);
+  }
 });
 
 formProfile.addEventListener('submit', submitProfile);
