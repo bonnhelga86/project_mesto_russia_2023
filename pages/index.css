@@ -45,7 +45,9 @@
 
 @import url("../blocks/form/form.css");
 @import url("../blocks/form/__input/form__input.css");
-@import url("../blocks/form/__input-error/form__input-error.css");
+@import url("../blocks/form/__input/_error/form__input_error.css");
+@import url("../blocks/form/__text-error/form__text-error.css");
+@import url("../blocks/form/__text-error/_visible/form__text-error_visible.css");
 
 @import url("../blocks/elements/elements.css");
 @import url("../blocks/elements/__list-item/elements__list-item.css");
