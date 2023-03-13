@@ -38,7 +38,7 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
-// Функция заполнения PopupImage
+// Функция заполнения popup с изображением
 function renderPhotoPopup(card) {
   const { name, link } = card || {};
   popupImagePhoto.src = link;
@@ -71,18 +71,6 @@ function createCard(card) {
   cardImage.alt = card.name;
 
   cardItem.querySelector('.elements__title').textContent = card.name;
-
-  cardItem.querySelector('.elements__like').addEventListener('click', event => {
-    event.stopPropagation();
-    likesCards(event.target);
-  });
-
-  cardItem.querySelector('.elements__trash').addEventListener('click', event => {
-    event.stopPropagation();
-    deleteCards(event.target.closest('.elements__item'));
-  });
-
-  cardItem.addEventListener('click', () => renderPhotoPopup(card));
 
   return cardItem;
 }
@@ -119,10 +107,31 @@ function submitCard(event) {
 
 renderCards();
 
-// Устанавливаются слушатели событий
+// Слушатель на предзаполнение popup профиля
 buttonOpenPopupProfile.addEventListener('click', () => fillPopupProfileFields());
+
+// Слушатель на открытие popup
 buttonOpenPopupCard.addEventListener('click', () => openPopup(popupCard));
 
+// Слушатели событий like, удалить или открыть карточку
+cardList.addEventListener('click', event => {
+  if (event.target.classList.contains('elements__like')) {
+    event.stopPropagation();
+    likesCards(event.target);
+  } else if (event.target.classList.contains('elements__trash')) {
+    event.stopPropagation();
+    deleteCards(event.target.closest('.elements__item'));
+  } else {
+    const cardItem = event.target.closest('.elements__item').querySelector('.elements__photo');
+    const card = {
+      name: cardItem.alt,
+      link: cardItem.src
+    }
+    renderPhotoPopup(card);
+  }
+})
+
+// Слушатель на закрытие popup по клику на крестик или overlay
 popupList.forEach(popup => {
   popup.addEventListener('click', event => {
     if (event.target.classList.contains('popup') || event.target.classList.contains('popup__close')) {
@@ -131,6 +140,7 @@ popupList.forEach(popup => {
   })
 });
 
+// Слушатель на закрытие popup по нажатию Escape
 document.addEventListener('keyup', event => {
   if (event.key === 'Escape') {
     const whichPopupIsOpen = Array.from(popupList).filter( (popup) => {
@@ -140,5 +150,6 @@ document.addEventListener('keyup', event => {
   }
 });
 
+// Слушатель на событие submit
 formProfile.addEventListener('submit', submitProfile);
 formCard.addEventListener('submit', submitCard);

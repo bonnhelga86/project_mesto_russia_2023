@@ -17,7 +17,9 @@ const hideError = (input, {errorMessageSelector, textErrorClass, inputErrorClass
 }
 
 // Функция проверки input на валидность
-const isInputValid = (input, config) => input.validity.valid ? hideError(input, config) : showError(input, config);
+const isInputValid = (input, config) => {
+  input.validity.valid ? hideError(input, config) : showError(input, config)
+};
 
 // Функция проверки полей в форме на валидность
 const hasInvalidInput = inputList => {
@@ -25,7 +27,9 @@ const hasInvalidInput = inputList => {
 }
 
 // Функция включения/выключения активной кнопки
-const toggleSubmitButton = (submitButton, inputList) => submitButton.disabled = hasInvalidInput(inputList);
+const toggleSubmitButton = (submitButton, inputList) => {
+  submitButton.disabled = hasInvalidInput(inputList)
+};
 
 // Функция добавления событий полям формы
 const setEventListener = (input, submitButton, inputList, config) => {
