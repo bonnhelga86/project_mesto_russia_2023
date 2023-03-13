@@ -21,20 +21,20 @@ const popupImagePhoto = popupImage.querySelector('.popup-image__photo');
 const popupImageCaption = popupImage.querySelector('.popup-image__caption');
 
 // Функция открывания Popup
-function openPopup(popup) {
+const openPopup = popup => {
   popup.classList.contains('popup_hidden') && popup.classList.remove('popup_hidden');
   popup.classList.add('popup_opened');
 }
 
 // Функция предзаполнения input в PopupProfile и очистка валидации
-function fillPopupProfileFields() {
+const fillPopupProfileFields = () => {
   formProfile['profile-name'].value = profileName.textContent;
   formProfile['profile-profession'].value = profileProfession.textContent;
   openPopup(popupProfile);
 }
 
 // Функция закрывания Popup
-function closePopup(popup) {
+const closePopup = popup => {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keyup', setEventListenerEscape);
 
@@ -51,7 +51,7 @@ function closePopup(popup) {
 }
 
 // Функция заполнения popup с изображением
-function renderPhotoPopup(card) {
+const renderPhotoPopup = card => {
   const { name, link } = card || {};
   popupImagePhoto.src = link;
   popupImagePhoto.alt = name;
@@ -60,22 +60,22 @@ function renderPhotoPopup(card) {
 }
 
 // Функция лайка карточек
-function likesCards(card) {
+const likesCards = card => {
   card.classList.toggle('elements__like_type_active');
 }
 
 // Функция удаления карточек
-function deleteCards(element) {
+const deleteCards = element => {
   element.remove();
 }
 
 // Функция вставки карточки в разметку
-function addCard(card) {
+const addCard = card => {
   cardList.prepend(card);
 }
 
 // Функция генерирования карточек
-function createCard(card) {
+const createCard = card => {
   const cardItem = cardTemplate.querySelector('.elements__item').cloneNode(true);
 
   const cardImage = cardItem.querySelector('.elements__photo');
@@ -88,7 +88,7 @@ function createCard(card) {
 }
 
 // Функция перебора массива с карточками и получения данных
-function renderCards() {
+const renderCards = () => {
   initialCards.forEach(cardData => {
     const card = createCard(cardData);
     addCard(card);
@@ -96,7 +96,7 @@ function renderCards() {
 }
 
 // Функция при Submit Profile
-function submitProfile(event) {
+const submitProfile = event => {
   event.preventDefault();
   profileName.textContent = formProfile['profile-name'].value;
   profileProfession.textContent = formProfile['profile-profession'].value;
@@ -104,7 +104,7 @@ function submitProfile(event) {
 }
 
 // Функция при Submit Card
-function submitCard(event) {
+const submitCard = event => {
   event.preventDefault();
   const cardData = {
       name: formCard['card-name'].value,
@@ -117,7 +117,7 @@ function submitCard(event) {
   formCard.querySelector('.popup__button').disabled = true;
 }
 
-function setEventListenerEscape(event) {
+const setEventListenerEscape = event => {
   Array.from(popupList).filter(popup => {
     if (event.key === 'Escape' && popup.classList.contains('popup_opened')) {
       const activePopup = popup;
