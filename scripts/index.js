@@ -26,7 +26,7 @@ function openPopup(popup) {
   popup.classList.add('popup_opened');
 }
 
-// Функция предзаполнения input в PopupProfile
+// Функция предзаполнения input в PopupProfile и очистка валидации
 function fillPopupProfileFields() {
   formProfile['profile-name'].value = profileName.textContent;
   formProfile['profile-profession'].value = profileProfession.textContent;
@@ -36,6 +36,18 @@ function fillPopupProfileFields() {
 // Функция закрывания Popup
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keyup', setEventListenerEscape);
+
+  if (popup.classList.contains('popup-profile')) {
+    popup.querySelectorAll('.form__input').forEach(popupInput => {
+      hideError(popupInput, {
+        errorMessageSelector: '.form__text-error_type_',
+        inputErrorClass: 'form__input_error',
+        textErrorClass: 'form__text-error_visible'
+      });
+    });
+    popup.querySelector('.popup__button').disabled = false;
+  }
 }
 
 // Функция заполнения popup с изображением
@@ -105,13 +117,29 @@ function submitCard(event) {
   formCard.querySelector('.popup__button').disabled = true;
 }
 
+function setEventListenerEscape(event) {
+  Array.from(popupList).filter(popup => {
+    if (event.key === 'Escape' && popup.classList.contains('popup_opened')) {
+      const activePopup = popup;
+      closePopup(activePopup);
+    }
+  })
+}
+
 renderCards();
 
 // Слушатель на предзаполнение popup профиля
-buttonOpenPopupProfile.addEventListener('click', () => fillPopupProfileFields());
+buttonOpenPopupProfile.addEventListener('click', () => {
+  fillPopupProfileFields();
+  document.addEventListener('keyup', setEventListenerEscape);
+});
 
 // Слушатель на открытие popup
-buttonOpenPopupCard.addEventListener('click', () => openPopup(popupCard));
+buttonOpenPopupCard.addEventListener('click', () => {
+  openPopup(popupCard);
+  document.addEventListener('keyup', setEventListenerEscape);
+});
+
 
 // Слушатели событий like, удалить или открыть карточку
 cardList.addEventListener('click', event => {
@@ -128,6 +156,7 @@ cardList.addEventListener('click', event => {
       link: cardItem.src
     }
     renderPhotoPopup(card);
+    document.addEventListener('keyup', setEventListenerEscape);
   }
 })
 
@@ -138,16 +167,6 @@ popupList.forEach(popup => {
       closePopup(popup);
     }
   })
-});
-
-// Слушатель на закрытие popup по нажатию Escape
-document.addEventListener('keyup', event => {
-  if (event.key === 'Escape') {
-    const whichPopupIsOpen = Array.from(popupList).filter( (popup) => {
-      return popup.classList.contains('popup_opened');
-    });
-    whichPopupIsOpen.length === 1 && closePopup(whichPopupIsOpen[0]);
-  }
 });
 
 // Слушатель на событие submit
