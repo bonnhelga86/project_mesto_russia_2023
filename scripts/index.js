@@ -119,12 +119,10 @@ const submitCard = event => {
 
 // Функция добавления слушателя на закрытие popu при нажатии Escape
 const setEventListenerEscape = event => {
-  Array.from(popupList).filter(popup => {
-    if (event.key === 'Escape' && popup.classList.contains('popup_opened')) {
-      const activePopup = popup;
-      closePopup(activePopup);
-    }
-  })
+  if (event.key === 'Escape') {
+    const activePopup = Array.from(popupList).filter(popup => popup.classList.contains('popup_opened'));
+    closePopup(activePopup[0]);
+  }
 }
 
 renderCards();
