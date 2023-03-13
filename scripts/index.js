@@ -117,6 +117,7 @@ const submitCard = event => {
   formCard.querySelector('.popup__button').disabled = true;
 }
 
+// Функция добавления слушателя на закрытие popu при нажатии Escape
 const setEventListenerEscape = event => {
   Array.from(popupList).filter(popup => {
     if (event.key === 'Escape' && popup.classList.contains('popup_opened')) {
@@ -169,6 +170,6 @@ popupList.forEach(popup => {
   })
 });
 
-// Слушатель на событие submit
+// Слушатели на события submit
 formProfile.addEventListener('submit', submitProfile);
 formCard.addEventListener('submit', submitCard);
