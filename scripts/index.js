@@ -20,9 +20,17 @@ const popupImage = document.querySelector('.popup-image');
 const popupImagePhoto = popupImage.querySelector('.popup-image__photo');
 const popupImageCaption = popupImage.querySelector('.popup-image__caption');
 
+// Функция добавления слушателя на закрытие popu при нажатии Escape
+const setEventListenerEscape = event => {
+  if (event.key === 'Escape') {
+    const activePopup = document.querySelector('.popup_opened');
+    closePopup(activePopup);
+  }
+}
+
 // Функция открывания Popup
 const openPopup = popup => {
-  popup.classList.contains('popup_hidden') && popup.classList.remove('popup_hidden');
+  document.addEventListener('keyup', setEventListenerEscape);
   popup.classList.add('popup_opened');
 }
 
@@ -30,24 +38,21 @@ const openPopup = popup => {
 const fillPopupProfileFields = () => {
   formProfile['profile-name'].value = profileName.textContent;
   formProfile['profile-profession'].value = profileProfession.textContent;
+  removeValidationErrors(popupProfile);
   openPopup(popupProfile);
+}
+
+// Функция очистки полей формы добавления карточки
+const clearPopupCardFields = () => {
+  formCard.reset();
+  removeValidationErrors(popupCard);
+  openPopup(popupCard);
 }
 
 // Функция закрывания Popup
 const closePopup = popup => {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keyup', setEventListenerEscape);
-
-  if (popup.classList.contains('popup-profile')) {
-    popup.querySelectorAll('.form__input').forEach(popupInput => {
-      hideError(popupInput, {
-        errorMessageSelector: '.form__text-error_type_',
-        inputErrorClass: 'form__input_error',
-        textErrorClass: 'form__text-error_visible'
-      });
-    });
-    popup.querySelector('.popup__button').disabled = false;
-  }
 }
 
 // Функция заполнения popup с изображением
@@ -84,6 +89,20 @@ const createCard = card => {
 
   cardItem.querySelector('.elements__title').textContent = card.name;
 
+  cardItem.querySelector('.elements__like').addEventListener('click', event => {
+    event.stopPropagation();
+    likesCards(event.target);
+  });
+
+  cardItem.querySelector('.elements__trash').addEventListener('click', event => {
+    event.stopPropagation();
+    deleteCards(event.target.closest('.elements__item'));
+  });
+
+  cardImage.addEventListener('click', event => {
+    renderPhotoPopup(card);
+  });
+
   return cardItem;
 }
 
@@ -114,15 +133,7 @@ const submitCard = event => {
   addCard(card);
   closePopup(popupCard);
   formCard.reset();
-  formCard.querySelector('.popup__button').disabled = true;
-}
-
-// Функция добавления слушателя на закрытие popu при нажатии Escape
-const setEventListenerEscape = event => {
-  if (event.key === 'Escape') {
-    const activePopup = Array.from(popupList).filter(popup => popup.classList.contains('popup_opened'));
-    closePopup(activePopup[0]);
-  }
+  disableSubmitButton(formCard.querySelector('.popup__button'));
 }
 
 renderCards();
@@ -130,34 +141,12 @@ renderCards();
 // Слушатель на предзаполнение popup профиля
 buttonOpenPopupProfile.addEventListener('click', () => {
   fillPopupProfileFields();
-  document.addEventListener('keyup', setEventListenerEscape);
 });
 
 // Слушатель на открытие popup
 buttonOpenPopupCard.addEventListener('click', () => {
-  openPopup(popupCard);
-  document.addEventListener('keyup', setEventListenerEscape);
+  clearPopupCardFields();
 });
-
-
-// Слушатели событий like, удалить или открыть карточку
-cardList.addEventListener('click', event => {
-  if (event.target.classList.contains('elements__like')) {
-    event.stopPropagation();
-    likesCards(event.target);
-  } else if (event.target.classList.contains('elements__trash')) {
-    event.stopPropagation();
-    deleteCards(event.target.closest('.elements__item'));
-  } else {
-    const cardItem = event.target.closest('.elements__item').querySelector('.elements__photo');
-    const card = {
-      name: cardItem.alt,
-      link: cardItem.src
-    }
-    renderPhotoPopup(card);
-    document.addEventListener('keyup', setEventListenerEscape);
-  }
-})
 
 // Слушатель на закрытие popup по клику на крестик или overlay
 popupList.forEach(popup => {
