@@ -99,7 +99,7 @@ const createCard = card => {
     deleteCards(event.target.closest('.elements__item'));
   });
 
-  cardImage.addEventListener('click', event => {
+  cardImage.addEventListener('click', () => {
     renderPhotoPopup(card);
   });
 
