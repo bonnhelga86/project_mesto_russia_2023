@@ -43,7 +43,6 @@ const removeValidationErrors = (popup) => {
       textErrorClass: 'form__text-error_visible'
     });
   });
-  enableSubmitButton(popup.querySelector('.popup__button'));
 }
 
 // Функция проверки input на валидность
