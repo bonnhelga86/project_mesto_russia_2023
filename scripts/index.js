@@ -4,6 +4,7 @@ const popupList = document.querySelectorAll('.popup');
 // Элементы Profile
 const popupProfile = document.querySelector('.popup-profile');
 const formProfile = popupProfile.querySelector('.form');
+const submitButtonProfile = formProfile.querySelector('.popup__button');
 const buttonOpenPopupProfile = document.querySelector('.profile__edit');
 const profileName = document.querySelector('.profile__name');
 const profileProfession = document.querySelector('.profile__profession');
@@ -11,6 +12,7 @@ const profileProfession = document.querySelector('.profile__profession');
 // Элементы Card
 const popupCard = document.querySelector('.popup-card');
 const formCard = popupCard.querySelector('.form');
+const submitButtonCard = formCard.querySelector('.popup__button');
 const buttonOpenPopupCard = document.querySelector('.profile__button');
 const cardList = document.querySelector('.elements__list-item');
 const cardTemplate = document.querySelector('#elements__template').content;
@@ -39,6 +41,7 @@ const fillPopupProfileFields = () => {
   formProfile['profile-name'].value = profileName.textContent;
   formProfile['profile-profession'].value = profileProfession.textContent;
   removeValidationErrors(popupProfile);
+  enableSubmitButton(submitButtonProfile);
   openPopup(popupProfile);
 }
 
@@ -46,6 +49,7 @@ const fillPopupProfileFields = () => {
 const clearPopupCardFields = () => {
   formCard.reset();
   removeValidationErrors(popupCard);
+  disableSubmitButton(submitButtonCard);
   openPopup(popupCard);
 }
 
@@ -132,8 +136,6 @@ const submitCard = event => {
   const card = createCard(cardData);
   addCard(card);
   closePopup(popupCard);
-  formCard.reset();
-  disableSubmitButton(formCard.querySelector('.popup__button'));
 }
 
 renderCards();
