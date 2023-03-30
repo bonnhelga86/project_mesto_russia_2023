@@ -1,34 +1,5 @@
 import { openPopup } from './index.js';
 
-const cardList = document.querySelector('.elements__list-item');
-
-const initialCards = [
-  {
-    name: 'Алтай',
-    link: './images/Altay.jpg'
-  },
-  {
-    name: 'Карелия',
-    link: './images/Kareliia.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: './images/Kamchatka.jpg'
-  },
-  {
-    name: 'Карачаево-Черкессия',
-    link: './images/Karachaevo.jpg'
-  },
-  {
-    name: 'Кавказ',
-    link: './images/Kavkaz.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: './images/Baykal.jpg'
-  }
-];
-
 export class Card {
   constructor(name, link, templateSelector) {
     this._name = name;
@@ -93,13 +64,3 @@ export class Card {
     return this._cardElement;
   }
 }
-
-export const addCard = card => {
-  cardList.prepend(card);
-}
-
-initialCards.forEach(element => {
-  const card = new Card(element.name, element.link, '#elements__template');
-  const cardElement = card.generateCard();
-  addCard(cardElement);
-})

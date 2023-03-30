@@ -1,4 +1,40 @@
-import { Card, addCard } from './Card.js'
+import { Card } from './Card.js';
+import { FormValidator } from './FormValidator.js';
+
+export const initialCards = [
+  {
+    name: 'Алтай',
+    link: './images/Altay.jpg'
+  },
+  {
+    name: 'Карелия',
+    link: './images/Kareliia.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: './images/Kamchatka.jpg'
+  },
+  {
+    name: 'Карачаево-Черкессия',
+    link: './images/Karachaevo.jpg'
+  },
+  {
+    name: 'Кавказ',
+    link: './images/Kavkaz.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: './images/Baykal.jpg'
+  }
+];
+
+const validationConfig = {
+  inputSelector: '.form__input',
+  submitButtonSelector: '.popup__button',
+  errorMessageSelector: '.form__text-error_type_',
+  inputErrorClass: 'form__input_error',
+  textErrorClass: 'form__text-error_visible'
+}
 
 // Все popup на странице
 const popupList = document.querySelectorAll('.popup');
@@ -16,6 +52,11 @@ const popupCard = document.querySelector('.popup-card');
 const formCard = popupCard.querySelector('.form');
 const submitButtonCard = formCard.querySelector('.popup__button');
 const buttonOpenPopupCard = document.querySelector('.profile__button');
+const cardList = document.querySelector('.elements__list-item');
+
+// Список всех форм на странице
+const formList = document.querySelectorAll('.form');
+
 
 // Функция добавления слушателя на закрытие popup при нажатии Escape
 const setEventListenerByEscape = event => {
@@ -23,6 +64,26 @@ const setEventListenerByEscape = event => {
     const activePopup = document.querySelector('.popup_opened');
     closePopup(activePopup);
   }
+}
+
+ // Функция удаления ошибок валидации
+ const removeValidationErrors = (popup) => {
+  popup.querySelectorAll('.form__input').forEach(input => {
+    const errorMessage = document.querySelector(`${validationConfig.errorMessageSelector}${input.name}`);
+    errorMessage.textContent = '';
+    errorMessage.classList.remove(`${validationConfig.textErrorClass}`);
+
+    input.classList.remove(`${validationConfig.inputErrorClass}`);
+  });
+}
+
+// Функции смены состояния кнопки submit
+const enableSubmitButton = (submitButton) => {
+  submitButton.disabled = false;
+}
+
+const disableSubmitButton = (submitButton) => {
+  submitButton.disabled = true;
 }
 
 // Функция открывания Popup
@@ -62,6 +123,11 @@ const submitProfile = event => {
   closePopup(popupProfile);
 }
 
+// Функция добавления карточки на страницу
+export const addCard = card => {
+  cardList.prepend(card);
+}
+
 // Функция при Submit Card
 const submitCard = event => {
   event.preventDefault();
@@ -70,6 +136,17 @@ const submitCard = event => {
   addCard(cardElement);
   closePopup(popupCard);
 }
+
+initialCards.forEach(element => {
+  const card = new Card(element.name, element.link, '#elements__template');
+  const cardElement = card.generateCard();
+  addCard(cardElement);
+})
+
+formList.forEach(form => {
+  const formValidator = new FormValidator(validationConfig, form);
+  formValidator.enableValidation();
+})
 
 // Слушатель на предзаполнение popup профиля
 buttonOpenPopupProfile.addEventListener('click', () => {
