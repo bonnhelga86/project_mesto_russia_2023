@@ -1,4 +1,7 @@
-// База данных карточек
+import { openPopup } from './index.js';
+
+const cardList = document.querySelector('.elements__list-item');
+
 const initialCards = [
   {
     name: 'Алтай',
@@ -30,7 +33,7 @@ export class Card {
   constructor(name, link, templateSelector) {
     this._name = name;
     this._link = link;
-    this._templateSelector = templateSelector
+    this._templateSelector = templateSelector;
   }
 
   _getTemplate() {
@@ -44,11 +47,22 @@ export class Card {
   }
 
   _likeCard() {
-    this._cardElement.querySelector('.elements__like').cardList.toggle('elements__like_type_active');
+    this._cardElement.querySelector('.elements__like').classList.toggle('elements__like_type_active');
   }
 
   _deleteCard() {
-    this._cardElement.querySelector('.elements__trash').remove();
+    this._cardElement.querySelector('.elements__trash').closest('.elements__item').remove();
+  }
+
+  _renderPhotoPopup() {
+    const popupImage = document.querySelector('.popup-image');
+    const popupImagePhoto = document.querySelector('.popup-image__photo');
+
+    popupImagePhoto.src = this._link;
+    popupImagePhoto.alt = this._name;
+    document.querySelector('.popup-image__caption').textContent = this._name;
+
+    openPopup(popupImage);
   }
 
   _setEventListeners() {
@@ -59,15 +73,20 @@ export class Card {
     this._cardElement.querySelector('.elements__trash').addEventListener('click', () => {
       this._deleteCard();
     });
+
+    this._cardImage.addEventListener('click', () => {
+      this._renderPhotoPopup();
+    });
   }
 
   generateCard() {
     this._cardElement = this._getTemplate();
-    _setEventListeners();
+    this._cardImage = this._cardElement.querySelector('.elements__photo');
 
-    const cardImage = this._cardElement.querySelector('.elements__photo');
-    cardImage.src = this._link;
-    cardImage.alt = this._name;
+    this._setEventListeners();
+
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
 
     this._cardElement.querySelector('.elements__title').textContent = this._name;
 
@@ -75,13 +94,12 @@ export class Card {
   }
 }
 
-// Функция вставки карточки в разметку
-const addCard = card => {
+export const addCard = card => {
   cardList.prepend(card);
 }
 
-initialCards.forEach(card => {
-  const card = new Card(card.name, card.link, '.elements__template');
+initialCards.forEach(element => {
+  const card = new Card(element.name, element.link, '#elements__template');
   const cardElement = card.generateCard();
   addCard(cardElement);
 })
