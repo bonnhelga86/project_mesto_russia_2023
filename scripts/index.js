@@ -69,54 +69,54 @@ const renderPhotoPopup = card => {
 }
 
 // Функция лайка карточек
-const likesCards = card => {
-  card.classList.toggle('elements__like_type_active');
-}
+// const likesCards = card => {
+//   card.classList.toggle('elements__like_type_active');
+// }
 
 // Функция удаления карточек
-const deleteCards = element => {
-  element.remove();
-}
+// const deleteCards = element => {
+//   element.remove();
+// }
 
-// Функция вставки карточки в разметку
-const addCard = card => {
-  cardList.prepend(card);
-}
+// // Функция вставки карточки в разметку
+// const addCard = card => {
+//   cardList.prepend(card);
+// }
 
 // Функция генерирования карточек
-const createCard = card => {
-  const cardItem = cardTemplate.querySelector('.elements__item').cloneNode(true);
+// const createCard = card => {
+//   const cardItem = cardTemplate.querySelector('.elements__item').cloneNode(true);
 
-  const cardImage = cardItem.querySelector('.elements__photo');
-  cardImage.src = card.link;
-  cardImage.alt = card.name;
+//   const cardImage = cardItem.querySelector('.elements__photo');
+//   cardImage.src = card.link;
+//   cardImage.alt = card.name;
 
-  cardItem.querySelector('.elements__title').textContent = card.name;
+//   cardItem.querySelector('.elements__title').textContent = card.name;
 
-  cardItem.querySelector('.elements__like').addEventListener('click', event => {
-    event.stopPropagation();
-    likesCards(event.target);
-  });
+//   cardItem.querySelector('.elements__like').addEventListener('click', event => {
+//     event.stopPropagation();
+//     likesCards(event.target);
+//   });
 
-  cardItem.querySelector('.elements__trash').addEventListener('click', event => {
-    event.stopPropagation();
-    deleteCards(event.target.closest('.elements__item'));
-  });
+//   cardItem.querySelector('.elements__trash').addEventListener('click', event => {
+//     event.stopPropagation();
+//     deleteCards(event.target.closest('.elements__item'));
+//   });
 
-  cardImage.addEventListener('click', () => {
-    renderPhotoPopup(card);
-  });
+//   cardImage.addEventListener('click', () => {
+//     renderPhotoPopup(card);
+//   });
 
-  return cardItem;
-}
+//   return cardItem;
+// }
 
 // Функция перебора массива с карточками и получения данных
-const renderCards = () => {
-  initialCards.forEach(cardData => {
-    const card = createCard(cardData);
-    addCard(card);
-  });
-}
+// const renderCards = () => {
+//   initialCards.forEach(cardData => {
+//     const card = createCard(cardData);
+//     addCard(card);
+//   });
+// }
 
 // Функция при Submit Profile
 const submitProfile = event => {
