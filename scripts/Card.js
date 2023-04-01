@@ -5,6 +5,8 @@ export class Card {
     this._name = name;
     this._link = link;
     this._templateSelector = templateSelector;
+    this._popupImage = document.querySelector('.popup-image');
+    this._popupImagePhoto = document.querySelector('.popup-image__photo');
   }
 
   _getTemplate() {
@@ -26,14 +28,11 @@ export class Card {
   }
 
   _renderPhotoPopup() {
-    const popupImage = document.querySelector('.popup-image');
-    const popupImagePhoto = document.querySelector('.popup-image__photo');
-
-    popupImagePhoto.src = this._link;
-    popupImagePhoto.alt = this._name;
+    this._popupImagePhoto.src = this._link;
+    this._popupImagePhoto.alt = this._name;
     document.querySelector('.popup-image__caption').textContent = this._name;
 
-    openPopup(popupImage);
+    openPopup(this._popupImage);
   }
 
   _setEventListeners() {

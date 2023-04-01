@@ -5,7 +5,7 @@ export class FormValidator {
   }
 
   _hideError(input) {
-    const errorMessage = document.querySelector(`${this._config.errorMessageSelector}${input.name}`);
+    const errorMessage = this._form.querySelector(`${this._config.errorMessageSelector}${input.name}`);
     errorMessage.textContent = '';
     errorMessage.classList.remove(this._config.textErrorClass);
 
@@ -13,7 +13,7 @@ export class FormValidator {
   }
 
   _showError(input) {
-    const errorMessage = document.querySelector(`${this._config.errorMessageSelector}${input.name}`);
+    const errorMessage = this._form.querySelector(`${this._config.errorMessageSelector}${input.name}`);
     errorMessage.textContent = input.validationMessage;
     errorMessage.classList.add(this._config.textErrorClass);
 
@@ -39,6 +39,20 @@ export class FormValidator {
         this._toggleSubmitButton();
       });
     });
+  }
+
+  removeValidationErrors = (popup) => {
+    popup.querySelectorAll('.form__input').forEach(input => {
+      this._hideError(input);
+    });
+  }
+
+  enableSubmitButton = (submitButton) => {
+    submitButton.disabled = false;
+  }
+
+  disableSubmitButton = (submitButton) => {
+    submitButton.disabled = true;
   }
 
   enableValidation = () => {
