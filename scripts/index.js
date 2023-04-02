@@ -104,11 +104,6 @@ initialCards.forEach(element => {
   createCard(element.name, element.link, '#elements__template');
 })
 
-// formList.forEach(form => {
-//   const formValidator = new FormValidator(validationConfig, form);
-//   formValidator.enableValidation();
-// })
-
 // Слушатель на предзаполнение popup профиля
 buttonOpenPopupProfile.addEventListener('click', () => {
   fillPopupProfileFields();
