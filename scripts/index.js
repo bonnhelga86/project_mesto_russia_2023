@@ -20,7 +20,6 @@ const submitButtonProfile = formProfile.querySelector('.popup__button');
 const buttonOpenPopupProfile = document.querySelector('.profile__edit');
 const profileName = document.querySelector('.profile__name');
 const profileProfession = document.querySelector('.profile__profession');
-const formProfileValidator = new FormValidator(validationConfig, formProfile);
 
 // Элементы Card
 const popupCard = document.querySelector('.popup-card');
@@ -28,11 +27,12 @@ const formCard = popupCard.querySelector('.form');
 const submitButtonCard = formCard.querySelector('.popup__button');
 const buttonOpenPopupCard = document.querySelector('.profile__button');
 const cardList = document.querySelector('.elements__list-item');
+
+// Создание экщемпляров класса валидации
+const formProfileValidator = new FormValidator(validationConfig, formProfile);
+formProfileValidator.enableValidation();
 const formCardValidator = new FormValidator(validationConfig, formCard);
-
-// Список всех форм на странице
-const formList = document.querySelectorAll('.form');
-
+formCardValidator.enableValidation();
 
 // Функция добавления слушателя на закрытие popup при нажатии Escape
 const setEventListenerByEscape = event => {
@@ -53,8 +53,8 @@ const fillPopupProfileFields = () => {
   formProfile['profile-name'].value = profileName.textContent;
   formProfile['profile-profession'].value = profileProfession.textContent;
 
-  formProfileValidator.removeValidationErrors(popupProfile);
-  formProfileValidator.enableSubmitButton(submitButtonProfile);
+  formProfileValidator.removeValidationErrors();
+  formProfileValidator.enableSubmitButton();
   openPopup(popupProfile);
 }
 
@@ -62,8 +62,8 @@ const fillPopupProfileFields = () => {
 const clearPopupCardFields = () => {
   formCard.reset();
 
-  formCardValidator.removeValidationErrors(popupCard);
-  formCardValidator.disableSubmitButton(submitButtonCard);
+  formCardValidator.removeValidationErrors();
+  formCardValidator.disableSubmitButton();
   openPopup(popupCard);
 }
 
@@ -102,11 +102,6 @@ const submitCard = event => {
 
 initialCards.forEach(element => {
   createCard(element.name, element.link, '#elements__template');
-})
-
-formList.forEach(form => {
-  const formValidator = new FormValidator(validationConfig, form);
-  formValidator.enableValidation();
 })
 
 // Слушатель на предзаполнение popup профиля

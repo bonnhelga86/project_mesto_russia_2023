@@ -7,6 +7,7 @@ export class Card {
     this._templateSelector = templateSelector;
     this._popupImage = document.querySelector('.popup-image');
     this._popupImagePhoto = document.querySelector('.popup-image__photo');
+    this._popupImageCaption = document.querySelector('.popup-image__caption');
   }
 
   _getTemplate() {
@@ -30,7 +31,7 @@ export class Card {
   _renderPhotoPopup() {
     this._popupImagePhoto.src = this._link;
     this._popupImagePhoto.alt = this._name;
-    document.querySelector('.popup-image__caption').textContent = this._name;
+    this._popupImageCaption.textContent = this._name;
 
     openPopup(this._popupImage);
   }

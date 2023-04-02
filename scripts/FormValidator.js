@@ -2,6 +2,8 @@ export class FormValidator {
   constructor(validationConfig, form) {
     this._config = validationConfig;
     this._form = form;
+    this._inputList = this._form.querySelectorAll(this._config.inputSelector);
+    this._submitButton = this._form.querySelector(this._config.submitButtonSelector);
   }
 
   _hideError(input) {
@@ -41,24 +43,21 @@ export class FormValidator {
     });
   }
 
-  removeValidationErrors = (popup) => {
-    popup.querySelectorAll('.form__input').forEach(input => {
+  removeValidationErrors = () => {
+    this._inputList.forEach(input => {
       this._hideError(input);
     });
   }
 
-  enableSubmitButton = (submitButton) => {
-    submitButton.disabled = false;
+  enableSubmitButton = () => {
+    this._submitButton.disabled = false;
   }
 
-  disableSubmitButton = (submitButton) => {
-    submitButton.disabled = true;
+  disableSubmitButton = () => {
+    this._submitButton.disabled = true;
   }
 
   enableValidation = () => {
-    this._inputList = this._form.querySelectorAll(this._config.inputSelector);
-    this._submitButton = this._form.querySelector(this._config.submitButtonSelector);
-
     this._setEventListener();
   }
 }
