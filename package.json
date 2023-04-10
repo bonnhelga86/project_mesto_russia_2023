@@ -1,0 +1,19 @@
+{
+  "name": "mesto_package",
+  "version": "0.0.1",
+  "description": "Проект о том, как, используя макет из __Figma__ правильно сверстать адаптивный сайт, применяя все изученные методологии, такие как __GRID Layout__ и __media queries__. Файловая структура по __БЭМ__.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bonnhelga86/mesto.git"
+  },
+  "author": "Olga Bondarenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bonnhelga86/mesto/issues"
+  },
+  "homepage": "https://github.com/bonnhelga86/mesto#readme"
+}

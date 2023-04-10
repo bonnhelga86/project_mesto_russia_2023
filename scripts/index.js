@@ -1,6 +1,7 @@
 import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
 import { initialCards } from './initialCards.js';
+import { Section } from '../components/Section.js';
 
 const validationConfig = {
   inputSelector: '.form__input',
@@ -26,13 +27,23 @@ const popupCard = document.querySelector('.popup-card');
 const formCard = popupCard.querySelector('.form');
 const submitButtonCard = formCard.querySelector('.popup__button');
 const buttonOpenPopupCard = document.querySelector('.profile__button');
-const cardList = document.querySelector('.elements__list-item');
+// const cardList = document.querySelector('.elements__list-item');
 
 // Создание экщемпляров класса валидации
 const formProfileValidator = new FormValidator(validationConfig, formProfile);
 formProfileValidator.enableValidation();
 const formCardValidator = new FormValidator(validationConfig, formCard);
 formCardValidator.enableValidation();
+
+const sectionCard = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card(item.name, item.link, '#elements__template');
+    const cardElement = card.generateCard();
+    return cardElement;
+  }
+}, '.elements__list-item');
+sectionCard.renderItems();
 
 // Функция добавления слушателя на закрытие popup при нажатии Escape
 const setEventListenerByEscape = event => {
@@ -87,11 +98,11 @@ const addCard = (card, containerForCards) => {
 }
 
 // Функция создания карточки
-const createCard = (name, link, template) => {
-  const card = new Card(name, link, template);
-  const cardElement = card.generateCard();
-  addCard(cardElement, cardList);
-}
+// const createCard = (name, link, template) => {
+//   const card = new Card(name, link, template);
+//   const cardElement = card.generateCard();
+//   addCard(cardElement, cardList);
+// }
 
 // Функция при Submit Card
 const submitCard = event => {
@@ -100,9 +111,9 @@ const submitCard = event => {
   closePopup(popupCard);
 }
 
-initialCards.forEach(element => {
-  createCard(element.name, element.link, '#elements__template');
-})
+// initialCards.forEach(element => {
+//   createCard(element.name, element.link, '#elements__template');
+// })
 
 // Слушатель на предзаполнение popup профиля
 buttonOpenPopupProfile.addEventListener('click', () => {
