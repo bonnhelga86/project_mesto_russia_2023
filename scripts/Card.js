@@ -1,5 +1,3 @@
-import { openPopup } from './index.js';
-
 export class Card {
   constructor(name, link, templateSelector) {
     this._name = name;
@@ -33,7 +31,7 @@ export class Card {
     this._popupImagePhoto.alt = this._name;
     this._popupImageCaption.textContent = this._name;
 
-    openPopup(this._popupImage);
+    // openPopup(this._popupImage);
   }
 
   _setEventListeners() {
