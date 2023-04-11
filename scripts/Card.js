@@ -1,8 +1,9 @@
 export class Card {
-  constructor(name, link, templateSelector) {
+  constructor({ name, link }, templateSelector, { rendererPopupImage }) {
     this._name = name;
     this._link = link;
     this._templateSelector = templateSelector;
+    this._rendererPopup = rendererPopupImage;
     this._popupImage = document.querySelector('.popup-image');
     this._popupImagePhoto = document.querySelector('.popup-image__photo');
     this._popupImageCaption = document.querySelector('.popup-image__caption');
@@ -26,14 +27,6 @@ export class Card {
     this._cardElement.querySelector('.elements__trash').closest('.elements__item').remove();
   }
 
-  _renderPhotoPopup() {
-    this._popupImagePhoto.src = this._link;
-    this._popupImagePhoto.alt = this._name;
-    this._popupImageCaption.textContent = this._name;
-
-    // openPopup(this._popupImage);
-  }
-
   _setEventListeners() {
     this._cardElement.querySelector('.elements__like').addEventListener('click', () => {
       this._likeCard();
@@ -44,7 +37,7 @@ export class Card {
     });
 
     this._cardImage.addEventListener('click', () => {
-      this._renderPhotoPopup();
+      this._rendererPopup(this._name, this._link);
     });
   }
 

@@ -3,6 +3,8 @@ import { FormValidator } from './FormValidator.js';
 import { initialCards } from './initialCards.js';
 import { Section } from '../components/Section.js';
 import { Popup } from '../components/Popup.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+
 
 const validationConfig = {
   inputSelector: '.form__input',
@@ -38,7 +40,16 @@ formCardValidator.enableValidation();
 const sectionCard = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card(item.name, item.link, '#elements__template');
+    const card = new Card(
+      item,
+      '#elements__template',
+      {
+        rendererPopupImage: (name, link) => {
+          const popupWithImage = new PopupWithImage('.popup-image', name, link);
+          popupWithImage.open();
+        }
+      }
+    );
     const cardElement = card.generateCard();
     return cardElement;
   }
@@ -62,7 +73,7 @@ const clearPopupCardFields = () => {
 
   formCardValidator.removeValidationErrors();
   formCardValidator.disableSubmitButton();
-  const popupCard = new Popup('.popup-profile');
+  const popupCard = new Popup('.popup-card');
   popupCard.open();
 }
 
