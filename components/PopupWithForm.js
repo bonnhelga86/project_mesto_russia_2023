@@ -7,7 +7,7 @@ export class PopupWithForm extends Popup {
     this._form = this._popup.querySelector('.form');
   }
 
-  _getInputValues() {
+  _getInputValues = () => {
     return Array.from(this._form.querySelectorAll('.form__input'))
     .reduce( (result, input) => ({ ...result, [input.name] : input.value }), {});
   }
@@ -19,7 +19,7 @@ export class PopupWithForm extends Popup {
 
   close() {
     super.close();
-    this._form.reset();
+    // this._form.reset();
   }
 
 }

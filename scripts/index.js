@@ -5,13 +5,12 @@ import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfo } from '../components/UserInfo.js';
 
 // Элементы Profile
 const popupWithProfile = document.querySelector('.popup-profile');
 const formProfile = popupWithProfile.querySelector('.form');
 const buttonOpenPopupProfile = document.querySelector('.profile__edit');
-const profileName = document.querySelector('.profile__name');
-const profileProfession = document.querySelector('.profile__profession');
 
 // Элементы Card
 const popupWithCard = document.querySelector('.popup-card');
@@ -47,8 +46,14 @@ sectionCard.renderItems();
 
 // Функция работы с формой для профиля
 const fillPopupProfileFields = () => {
-  formProfile['profile-name'].value = profileName.textContent;
-  formProfile['profile-profession'].value = profileProfession.textContent;
+  const user = new UserInfo({
+    nameSelector: '.profile__name',
+    professionSelector: '.profile__profession'
+  });
+  const { name, profession } = user.getUserInfo();
+
+  formProfile['profile-name'].value = name;
+  formProfile['profile-profession'].value = profession;
 
   formProfileValidator.removeValidationErrors();
   formProfileValidator.enableSubmitButton();
@@ -56,16 +61,17 @@ const fillPopupProfileFields = () => {
   const popupProfile = new PopupWithForm(
     '.popup-profile',
     {
-      /*  callbackSubmit: (event, profileData) => {
-        event.preventDefault();
-        profileName.textContent = profileData['profile-name'];
-        profileProfession.textContent = profileData['profile-profession'];
-        popupProfile.close();
-      }  */
+      // callbackSubmit: (event, profileData) => {
+      //   event.preventDefault();
+      //   profileName.textContent = profileData['profile-name'];
+      //   profileProfession.textContent = profileData['profile-profession'];
+      //   popupProfile.close();
+      // }
+
       callbackSubmit: (event, {'profile-name': name, 'profile-profession': profession}) => {
         event.preventDefault();
-        profileName.textContent = name;
-        profileProfession.textContent = profession;
+        console.log(name, profession);
+        user.setUserInfo(name, profession);
         popupProfile.close();
       }
     }
