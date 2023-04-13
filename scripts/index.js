@@ -61,16 +61,8 @@ const fillPopupProfileFields = () => {
   const popupProfile = new PopupWithForm(
     '.popup-profile',
     {
-      // callbackSubmit: (event, profileData) => {
-      //   event.preventDefault();
-      //   profileName.textContent = profileData['profile-name'];
-      //   profileProfession.textContent = profileData['profile-profession'];
-      //   popupProfile.close();
-      // }
-
       callbackSubmit: (event, {'profile-name': name, 'profile-profession': profession}) => {
         event.preventDefault();
-        console.log(name, profession);
         user.setUserInfo(name, profession);
         popupProfile.close();
       }
