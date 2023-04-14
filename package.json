@@ -2,9 +2,10 @@
   "name": "mesto_package",
   "version": "1.0.0",
   "description": "Проект о том, как, используя макет из __Figma__ правильно сверстать адаптивный сайт, применяя все изученные методологии, такие как __GRID Layout__ и __media queries__. Файловая структура по __БЭМ__.",
-  "main": "index.js",
+  "main": "./src/scripts/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/bonnhelga86/mesto/issues"
   },
-  "homepage": "https://github.com/bonnhelga86/mesto#readme"
+  "homepage": "https://github.com/bonnhelga86/mesto#readme",
+  "devDependencies": {
+    "webpack": "^5.79.0",
+    "webpack-cli": "^5.0.1"
+  }
 }

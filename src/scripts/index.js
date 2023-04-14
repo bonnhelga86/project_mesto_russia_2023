@@ -1,8 +1,6 @@
 import {
-  popupWithProfile,
   formProfile,
   buttonOpenPopupProfile,
-  popupWithCard,
   formCard,
   buttonOpenPopupCard
 } from '../utils/constants.js';
