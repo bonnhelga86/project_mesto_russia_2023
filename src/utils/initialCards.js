@@ -1,26 +1,34 @@
+import Altay from '../images/Altay.jpg';
+import Kareliia from '../images/Kareliia.jpg';
+import Kamchatka from '../images/Kamchatka.jpg';
+import Karachaevo from '../images/Karachaevo.jpg';
+import Kavkaz from '../images/Kavkaz.jpg';
+import Baykal from '../images/Baykal.jpg';
+
+
 export const initialCards = [
   {
     name: 'Алтай',
-    link: './images/Altay.jpg'
+    link: Altay
   },
   {
     name: 'Карелия',
-    link: './images/Kareliia.jpg'
+    link: Kareliia
   },
   {
     name: 'Камчатка',
-    link: './images/Kamchatka.jpg'
+    link: Kamchatka
   },
   {
     name: 'Карачаево-Черкессия',
-    link: './images/Karachaevo.jpg'
+    link: Karachaevo
   },
   {
     name: 'Кавказ',
-    link: './images/Kavkaz.jpg'
+    link: Kavkaz
   },
   {
     name: 'Байкал',
-    link: './images/Baykal.jpg'
+    link: Baykal
   }
 ];
