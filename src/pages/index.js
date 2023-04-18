@@ -31,8 +31,8 @@ const sectionCard = new Section({
       '#elements__template',
       {
         handleCardClick: (name, link) => {
-          const popupWithImage = new PopupWithImage('.popup-image', name, link);
-          popupWithImage.open();
+          const popupWithImage = new PopupWithImage('.popup-image');
+          popupWithImage.open(name, link);
         }
       }
     );
@@ -75,8 +75,8 @@ const popupCard = new PopupWithForm(
             '#elements__template',
             {
               handleCardClick: (name, link) => {
-                const popupWithImage = new PopupWithImage('.popup-image', name, link);
-                popupWithImage.open();
+                const popupWithImage = new PopupWithImage('.popup-image');
+                popupWithImage.open(name, link);
               }
             }
           );
