@@ -70,16 +70,11 @@ const popupProfile = new PopupWithForm(
 const popupCard = new PopupWithForm(
   '.popup-card',
   {
-    callbackSubmit: (event, dataCard) => {
+    callbackSubmit: (event, {'card-name': name, 'card-profession': link}) => {
       event.preventDefault();
 
-      const sectionForCard = new Section ({
-        items: [dataCard],
-        renderer: (item) => {
-          return createCard(item);
-        }
-      }, '.elements__list-item');
-      sectionForCard.renderItems();
+      const newCard = createCard({name, link});
+      sectionCard.addItem(newCard);
 
       popupCard.close();
     }

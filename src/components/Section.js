@@ -5,8 +5,8 @@ export class Section {
     this._container = document.querySelector(containerSelector);
   }
 
-  addItem() {
-    this._container.prepend(this._itemElement);
+  addItem(newCard = this._itemElement) {
+    this._container.prepend(newCard);
   }
 
   renderItems() {
