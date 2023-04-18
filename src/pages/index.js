@@ -22,13 +22,15 @@ formProfileValidator.enableValidation();
 const formCardValidator = new FormValidator(validationConfig, formCard);
 formCardValidator.enableValidation();
 
+// Создание экземпляра класса PopupWithImage
+const popupWithImage = new PopupWithImage('.popup-image');
+
 const createCard = item => {
   const card = new Card(
     item,
     '#elements__template',
     {
       handleCardClick: (name, link) => {
-        const popupWithImage = new PopupWithImage('.popup-image');
         popupWithImage.open(name, link);
       }
     }
