@@ -22,22 +22,26 @@ formProfileValidator.enableValidation();
 const formCardValidator = new FormValidator(validationConfig, formCard);
 formCardValidator.enableValidation();
 
+const createCard = item => {
+  const card = new Card(
+    item,
+    '#elements__template',
+    {
+      handleCardClick: (name, link) => {
+        const popupWithImage = new PopupWithImage('.popup-image');
+        popupWithImage.open(name, link);
+      }
+    }
+  );
+  const cardElement = card.generateCard();
+  return cardElement;
+}
+
 // Создание экземпляра класса Section
 const sectionCard = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card(
-      item,
-      '#elements__template',
-      {
-        handleCardClick: (name, link) => {
-          const popupWithImage = new PopupWithImage('.popup-image');
-          popupWithImage.open(name, link);
-        }
-      }
-    );
-    const cardElement = card.generateCard();
-    return cardElement;
+    return createCard(item);
   }
 }, '.elements__list-item');
 sectionCard.renderItems();
@@ -70,18 +74,7 @@ const popupCard = new PopupWithForm(
       const sectionForCard = new Section ({
         items: [dataCard],
         renderer: (item) => {
-          const card = new Card(
-            item,
-            '#elements__template',
-            {
-              handleCardClick: (name, link) => {
-                const popupWithImage = new PopupWithImage('.popup-image');
-                popupWithImage.open(name, link);
-              }
-            }
-          );
-          const cardElement = card.generateCard();
-          return cardElement;
+          return createCard(item);
         }
       }, '.elements__list-item');
       sectionForCard.renderItems();
