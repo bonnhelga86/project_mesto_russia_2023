@@ -2,7 +2,7 @@
   "name": "mesto_package",
   "version": "1.0.0",
   "description": "Проект о том, как, используя макет из __Figma__ правильно сверстать адаптивный сайт, применяя все изученные методологии, такие как __GRID Layout__ и __media queries__. Файловая структура по __БЭМ__.",
-  "main": "./src/scripts/index.js",
+  "main": "./src/pages/index.js",
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack serve"
