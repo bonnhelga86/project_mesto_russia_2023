@@ -39,14 +39,34 @@ const createCard = item => {
   return cardElement;
 }
 
+const getCards = () => {
+  return fetch('https://nomoreparties.co/v1/cohort-65/cards', {
+      headers: {
+        authorization: '76bd6af4-1eb8-427e-97cd-2bc6cdc45941'
+      }
+    })
+    .then(response => {
+      if(!response.ok) throw new Error('Информация о карточках в данный момент недоступна');
+
+      return response.json();
+    })
+    .then(cardsData => {
+      return cardsData;
+    })
+    .catch(error => {
+      console.error(error);
+    })
+}
+
 // Создание экземпляра класса Section
 const sectionCard = new Section({
-  items: initialCards,
   renderer: (item) => {
     return createCard(item);
   }
 }, '.elements__list-item');
-sectionCard.renderItems();
+
+getCards().then((items) => sectionCard.renderItems(items));
+
 
 // Создание экземпляра класса User
 const user = new UserInfo({

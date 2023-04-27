@@ -12,7 +12,7 @@ export class UserInfo {
       }
     })
     .then(response => {
-      if(!response.ok) throw new Error('Хьюстон, у нас проблемы!');
+      if(!response.ok) throw new Error('Информация о пользователе в данный момент недоступна');
 
       return response.json();
     })
@@ -48,7 +48,7 @@ export class UserInfo {
       })
     })
     .then(response => {
-      if(!response.ok) throw new Error('Хьюстон, у нас проблемы!');
+      if(!response.ok) throw new Error('Обновление данных не удалось');
 
       return response.json();
     })
