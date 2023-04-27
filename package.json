@@ -4,6 +4,8 @@
   "description": "Проект о том, как, используя макет из __Figma__ правильно сверстать адаптивный сайт, применяя все изученные методологии, такие как __GRID Layout__ и __media queries__. Файловая структура по __БЭМ__.",
   "main": "./src/pages/index.js",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "build": "webpack --mode production",
     "dev": "webpack serve"
   },
@@ -25,6 +27,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.3",
     "cssnano": "^6.0.0",
+    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.5",
     "postcss-loader": "^7.2.4",

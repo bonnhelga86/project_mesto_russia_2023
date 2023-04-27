@@ -51,16 +51,24 @@ sectionCard.renderItems();
 // Создание экземпляра класса User
 const user = new UserInfo({
   nameSelector: '.profile__name',
-  professionSelector: '.profile__profession'
+  aboutSelector: '.profile__profession',
+  avatarSelector: '.profile__image'
+});
+
+user.getUserInfo().then(({ name, about, avatar }) => {
+  user.setUserInfo(name, about);
+  user.setUserAvatar(avatar, name);
+}).catch(error => {
+  console.log(error);
 });
 
 // Создание экземпляра класса PopupWithForm для профиля
 const popupProfile = new PopupWithForm(
   '.popup-profile',
   {
-    callbackSubmit: (event, {'profile-name': name, 'profile-profession': profession}) => {
+    callbackSubmit: (event, {'profile-name': name, 'profile-profession': about}) => {
       event.preventDefault();
-      user.setUserInfo(name, profession);
+      user.setUserInfo(name, about);
       popupProfile.close();
     }
   }
@@ -83,10 +91,10 @@ const popupCard = new PopupWithForm(
 
 // Функция работы с формой для профиля
 const fillPopupProfileFields = () => {
-  const { name, profession } = user.getUserInfo();
+  const { name, about } = user.getUserInfo();
 
   formProfile['profile-name'].value = name;
-  formProfile['profile-profession'].value = profession;
+  formProfile['profile-profession'].value = about;
 
   formProfileValidator.removeValidationErrors();
   formProfileValidator.enableSubmitButton();
