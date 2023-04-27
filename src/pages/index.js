@@ -55,12 +55,14 @@ const user = new UserInfo({
   avatarSelector: '.profile__image'
 });
 
-user.getUserInfo().then(({ name, about, avatar }) => {
-  user.setUserInfo(name, about);
-  user.setUserAvatar(avatar, name);
-}).catch(error => {
-  console.log(error);
-});
+user.getUserInfo()
+    .then(({ name, about, avatar }) => {
+      user.setUserInfo(name, about);
+      user.setUserAvatar(avatar, name);
+    })
+    .catch(error => {
+      console.error(error);
+    });
 
 // Создание экземпляра класса PopupWithForm для профиля
 const popupProfile = new PopupWithForm(
@@ -68,6 +70,7 @@ const popupProfile = new PopupWithForm(
   {
     callbackSubmit: (event, {'profile-name': name, 'profile-profession': about}) => {
       event.preventDefault();
+      user.saveUserInfo(name, about);
       user.setUserInfo(name, about);
       popupProfile.close();
     }
@@ -91,15 +94,19 @@ const popupCard = new PopupWithForm(
 
 // Функция работы с формой для профиля
 const fillPopupProfileFields = () => {
-  const { name, about } = user.getUserInfo();
+  user.getUserInfo()
+      .then(({ name, about }) => {
+        formProfile['profile-name'].value = name;
+        formProfile['profile-profession'].value = about;
 
-  formProfile['profile-name'].value = name;
-  formProfile['profile-profession'].value = about;
+        formProfileValidator.removeValidationErrors();
+        formProfileValidator.enableSubmitButton();
 
-  formProfileValidator.removeValidationErrors();
-  formProfileValidator.enableSubmitButton();
-
-  popupProfile.open();
+        popupProfile.open();
+      })
+      .catch(error => {
+        console.error(error);
+      })
 }
 
 // Функция работы с формой для карточки
