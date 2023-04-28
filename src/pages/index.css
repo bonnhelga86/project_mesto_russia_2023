@@ -42,6 +42,10 @@
 @import url("../blocks/popup-image/__photo/popup-image__photo.css");
 @import url("../blocks/popup-image/__caption/popup-image__caption.css");
 
+@import url("../blocks/popup-delete/popup-delete.css");
+@import url("../blocks/popup-delete/__wrap/popup-delete__wrap.css");
+@import url("../blocks/popup-delete/__text/popup-delete__text.css");
+
 @import url("../blocks/form/form.css");
 @import url("../blocks/form/__input/form__input.css");
 @import url("../blocks/form/__input/_error/form__input_error.css");
