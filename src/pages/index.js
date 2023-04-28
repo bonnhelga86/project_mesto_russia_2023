@@ -7,6 +7,7 @@ import {
 } from '../utils/constants.js';
 
 import { validationConfig } from '../utils/validationConfig.js';
+import { Api } from '../components/Api.js';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
@@ -14,6 +15,14 @@ import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { PopupForDelete } from '../components/PopupForDelete.js';
 import { UserInfo } from '../components/UserInfo.js';
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-42',
+  headers: {
+    authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6',
+    'Content-Type': 'application/json'
+  }
+});
 
 // Создание экземпляров класса валидации
 const formProfileValidator = new FormValidator(validationConfig, formProfile);
@@ -30,7 +39,7 @@ const user = new UserInfo({
 });
 
 // Получение данных о пользователе с сервера
-user.getUserInfo()
+api.getUserInfo()
     .then(({ name, about, avatar }) => {
       user.setUserInfo(name, about);
       user.setUserAvatar(avatar, name);
@@ -46,7 +55,7 @@ const popupProfile = new PopupWithForm(
     callbackSubmit: (event, {'profile-name': name, 'profile-profession': about}) => {
       event.preventDefault();
 
-      user.saveUserInfo(name, about);
+      api.saveUserInfo(name, about);
       user.setUserInfo(name, about);
       popupProfile.close();
     }
@@ -82,38 +91,6 @@ const createCard = item => {
   return cardElement;
 }
 
-// Запрос массива карточек с сервера
-const getCards = () => {
-  return fetch('https://nomoreparties.co/v1/cohort-65/cards', {
-      headers: {
-        authorization: '76bd6af4-1eb8-427e-97cd-2bc6cdc45941'
-      }
-    })
-    .then(response => {
-      if(!response.ok) throw new Error('Информация о карточках в данный момент недоступна');
-
-      return response.json();
-    })
-    .then(cardsData => {
-      return cardsData;
-    })
-    .catch(error => {
-      console.error(error);
-    })
-}
-
-// Сохранение карточки на сервере
-const saveCard = (name, link) => {
-  return fetch('https://mesto.nomoreparties.co/v1/cohort-65/cards', {
-    method: 'POST',
-    headers: {
-      authorization: '76bd6af4-1eb8-427e-97cd-2bc6cdc45941',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({name, link})
-  })
-}
-
 // Создание экземпляра класса Section
 const sectionCard = new Section({
   renderer: (item) => {
@@ -122,7 +99,7 @@ const sectionCard = new Section({
 }, '.elements__list-item');
 
 // Отображение карточек, подгруженных с сервера
-getCards().then((items) => sectionCard.renderItems(items));
+api.getInitialCards().then((items) => sectionCard.renderItems(items));
 
 // Создание экземпляра класса PopupWithForm для карточки
 const popupCard = new PopupWithForm(
@@ -131,7 +108,7 @@ const popupCard = new PopupWithForm(
     callbackSubmit: (event, {'card-name': name, 'card-profession': link}) => {
       event.preventDefault();
 
-      saveCard(name, link)
+      api.saveCard(name, link)
         .then(response => {
           if(!response.ok) throw new Error('Данные о карточке не загрузились, попробуйте позже');
 
@@ -152,7 +129,7 @@ const popupCard = new PopupWithForm(
 
 // Функция работы с формой для профиля
 const fillPopupProfileFields = () => {
-  user.getUserInfo()
+  api.getUserInfo()
       .then(({ name, about }) => {
         formProfile['profile-name'].value = name;
         formProfile['profile-profession'].value = about;
