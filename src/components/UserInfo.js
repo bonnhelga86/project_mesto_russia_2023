@@ -42,10 +42,7 @@ export class UserInfo {
         authorization: '76bd6af4-1eb8-427e-97cd-2bc6cdc45941',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        name: name,
-        about: about
-      })
+      body: JSON.stringify({name, about})
     })
     .then(response => {
       if(!response.ok) throw new Error('Обновление данных не удалось');

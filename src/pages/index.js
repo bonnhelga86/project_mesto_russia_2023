@@ -22,9 +22,41 @@ formProfileValidator.enableValidation();
 const formCardValidator = new FormValidator(validationConfig, formCard);
 formCardValidator.enableValidation();
 
+// Создание экземпляра класса User
+const user = new UserInfo({
+  nameSelector: '.profile__name',
+  aboutSelector: '.profile__profession',
+  avatarSelector: '.profile__image'
+});
+
+// Получение данных о пользователе с сервера
+user.getUserInfo()
+    .then(({ name, about, avatar }) => {
+      user.setUserInfo(name, about);
+      user.setUserAvatar(avatar, name);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+
+// Создание экземпляра класса PopupWithForm для профиля
+const popupProfile = new PopupWithForm(
+  '.popup-profile',
+  {
+    callbackSubmit: (event, {'profile-name': name, 'profile-profession': about}) => {
+      event.preventDefault();
+
+      user.saveUserInfo(name, about);
+      user.setUserInfo(name, about);
+      popupProfile.close();
+    }
+  }
+);
+
 // Создание экземпляра класса PopupWithImage
 const popupWithImage = new PopupWithImage('.popup-image');
 
+// Функция создания элемента карточки
 const createCard = item => {
   const card = new Card(
     item,
@@ -39,6 +71,7 @@ const createCard = item => {
   return cardElement;
 }
 
+// Запрос массива карточек с сервера
 const getCards = () => {
   return fetch('https://nomoreparties.co/v1/cohort-65/cards', {
       headers: {
@@ -58,6 +91,18 @@ const getCards = () => {
     })
 }
 
+// Сохранение карточки на сервере
+const saveCard = (name, link) => {
+  return fetch('https://mesto.nomoreparties.co/v1/cohort-65/cards', {
+    method: 'POST',
+    headers: {
+      authorization: '76bd6af4-1eb8-427e-97cd-2bc6cdc45941',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({name, link})
+  })
+}
+
 // Создание экземпляра класса Section
 const sectionCard = new Section({
   renderer: (item) => {
@@ -65,37 +110,8 @@ const sectionCard = new Section({
   }
 }, '.elements__list-item');
 
+// Отображение карточек, подгруженных с сервера
 getCards().then((items) => sectionCard.renderItems(items));
-
-
-// Создание экземпляра класса User
-const user = new UserInfo({
-  nameSelector: '.profile__name',
-  aboutSelector: '.profile__profession',
-  avatarSelector: '.profile__image'
-});
-
-user.getUserInfo()
-    .then(({ name, about, avatar }) => {
-      user.setUserInfo(name, about);
-      user.setUserAvatar(avatar, name);
-    })
-    .catch(error => {
-      console.error(error);
-    });
-
-// Создание экземпляра класса PopupWithForm для профиля
-const popupProfile = new PopupWithForm(
-  '.popup-profile',
-  {
-    callbackSubmit: (event, {'profile-name': name, 'profile-profession': about}) => {
-      event.preventDefault();
-      user.saveUserInfo(name, about);
-      user.setUserInfo(name, about);
-      popupProfile.close();
-    }
-  }
-);
 
 // Создание экземпляра класса PopupWithForm для карточки
 const popupCard = new PopupWithForm(
@@ -104,13 +120,24 @@ const popupCard = new PopupWithForm(
     callbackSubmit: (event, {'card-name': name, 'card-profession': link}) => {
       event.preventDefault();
 
-      const newCard = createCard({name, link});
-      sectionCard.addItem(newCard);
+      saveCard(name, link)
+        .then(response => {
+          if(!response.ok) throw new Error('Данные о карточке не загрузились, попробуйте позже');
+
+          return response.json()
+        })
+        .then(({ name, link }) => {
+          const newCard = createCard({name, link});
+          sectionCard.addItem(newCard);
+        })
+        .catch(error => {
+          console.error(error);
+        })
 
       popupCard.close();
     }
   }
-  );
+);
 
 // Функция работы с формой для профиля
 const fillPopupProfileFields = () => {
