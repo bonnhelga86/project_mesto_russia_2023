@@ -1,7 +1,8 @@
 export class Card {
-  constructor({ name, link }, templateSelector, { handleCardClick }) {
+  constructor({ name, link, likes }, templateSelector, { handleCardClick }) {
     this._name = name;
     this._link = link;
+    this._likes = likes.length;
     this._templateSelector = templateSelector;
     this._openPopupWithImage = handleCardClick;
     this._popupImage = document.querySelector('.popup-image');
@@ -50,6 +51,7 @@ export class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
 
+    this._cardElement.querySelector('.elements__like-count').textContent = this._likes;
     this._cardElement.querySelector('.elements__title').textContent = this._name;
 
     return this._cardElement;

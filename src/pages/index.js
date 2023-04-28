@@ -126,8 +126,8 @@ const popupCard = new PopupWithForm(
 
           return response.json()
         })
-        .then(({ name, link }) => {
-          const newCard = createCard({name, link});
+        .then(item => {
+          const newCard = createCard(item);
           sectionCard.addItem(newCard);
         })
         .catch(error => {
