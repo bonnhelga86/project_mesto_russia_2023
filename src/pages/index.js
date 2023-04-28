@@ -6,13 +6,13 @@ import {
   buttonOpenPopupCard
 } from '../utils/constants.js';
 
-import { initialCards } from '../utils/initialCards.js';
 import { validationConfig } from '../utils/validationConfig.js';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupForDelete } from '../components/PopupForDelete.js';
 import { UserInfo } from '../components/UserInfo.js';
 
 // Создание экземпляров класса валидации
@@ -56,6 +56,14 @@ const popupProfile = new PopupWithForm(
 // Создание экземпляра класса PopupWithImage
 const popupWithImage = new PopupWithImage('.popup-image');
 
+// Создание экземпляра класса PopupForDelete
+const popupForDelete = new PopupForDelete('.popup-delete', {
+  handleButtonClick: () => {
+    console.log('Вы удалили карточку!');
+    popupForDelete.close();
+  }
+});
+
 // Функция создания элемента карточки
 const createCard = item => {
   const card = new Card(
@@ -64,6 +72,9 @@ const createCard = item => {
     {
       handleCardClick: (name, link) => {
         popupWithImage.open(name, link);
+      },
+      handleDeleteClick: () => {
+        popupForDelete.open();
       }
     }
   );
