@@ -17,9 +17,9 @@ import { PopupForDelete } from '../components/PopupForDelete.js';
 import { UserInfo } from '../components/UserInfo.js';
 
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-42',
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-65',
   headers: {
-    authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6',
+    authorization: '76bd6af4-1eb8-427e-97cd-2bc6cdc45941',
     'Content-Type': 'application/json'
   }
 });
@@ -105,7 +105,7 @@ api.getInitialCards().then((items) => sectionCard.renderItems(items));
 const popupCard = new PopupWithForm(
   '.popup-card',
   {
-    callbackSubmit: (event, {'card-name': name, 'card-profession': link}) => {
+    callbackSubmit: (event, {'card-name': name, 'card-link': link}) => {
       event.preventDefault();
 
       api.saveCard(name, link)

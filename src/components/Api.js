@@ -18,7 +18,12 @@ export class Api {
       return response.json();
     })
     .then(cardsData => {
-      return cardsData;
+      // return cardsData.map((card) => {
+      //   card.isMyCard = (card.owner._id === this._myId);
+      //   return card;
+      // });
+
+      return cardsData.map((card) => ({ ...card, isMyCard: (card.owner._id === this._myId) }));
     })
     .catch(error => {
       console.error(error);
@@ -46,6 +51,7 @@ export class Api {
       return response.json();
     })
     .then(userData => {
+      this._myId = userData._id;
       return userData;
     })
     .catch(error => {
@@ -54,7 +60,6 @@ export class Api {
   }
 
   saveUserInfo(name, about) {
-    console.log(name, about);
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,

@@ -8,6 +8,7 @@
   background-size: cover;
   top: 19px;
   right: 19px;
+  display: none;
 }
 
 .elements__trash:hover {

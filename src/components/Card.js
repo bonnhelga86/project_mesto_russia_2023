@@ -1,8 +1,9 @@
 export class Card {
-  constructor({ name, link, likes }, templateSelector, { handleCardClick, handleDeleteClick }) {
+  constructor({ name, link, likes, isMyCard }, templateSelector, { handleCardClick, handleDeleteClick }) {
     this._name = name;
     this._link = link;
     this._likes = likes.length;
+    this._isMyCard = isMyCard;
     this._templateSelector = templateSelector;
     this._openPopupWithImage = handleCardClick;
     this._openPopupForDelete = handleDeleteClick;
@@ -55,6 +56,8 @@ export class Card {
 
     this._cardElement.querySelector('.elements__like-count').textContent = this._likes;
     this._cardElement.querySelector('.elements__title').textContent = this._name;
+
+    this._isMyCard && this._cardElement.querySelector('.elements__trash').classList.add('elements__trash_show');
 
     return this._cardElement;
   }

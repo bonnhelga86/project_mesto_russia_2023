@@ -56,6 +56,7 @@
 @import url("../blocks/elements/__list-item/elements__list-item.css");
 @import url("../blocks/elements/__item/elements__item.css");
 @import url("../blocks/elements/__trash/elements__trash.css");
+@import url("../blocks/elements/__trash/_show/elements__trash_show.css");
 @import url("../blocks/elements/__photo/elements__photo.css");
 @import url("../blocks/elements/__content/elements__content.css");
 @import url("../blocks/elements/__like/elements__like.css");
