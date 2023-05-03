@@ -18,11 +18,6 @@ export class Api {
       return response.json();
     })
     .then(cardsData => {
-      // return cardsData.map((card) => {
-      //   card.isMyCard = (card.owner._id === this._myId);
-      //   return card;
-      // });
-
       return cardsData.map((card) => ({ ...card, isMyCard: (card.owner._id === this._myId) }));
     })
     .catch(error => {
@@ -35,6 +30,50 @@ export class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({name, link})
+    })
+  }
+
+  likeCard(cardId) {
+    console.log('Вы лайкнули карточку', cardId);
+
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._authorization
+      }
+    })
+    .then(response => {
+      if(!response.ok) throw new Error('Не удалось поставить лайк');
+      return response.json();
+    })
+    .then(cardData => {
+      return cardData;
+    })
+    .catch(error => {
+      console.error(error);
+    })
+  }
+
+  dislikeCard() {
+    console.log('Вы дизлайкнули карточку');
+  }
+
+  deleteCard(elementForDelete, cardId) {
+    fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization
+      }
+    })
+    .then(response => {
+      if(!response.ok) {
+        throw new Error('Карточка не удалилась');
+      } else {
+        elementForDelete.remove();
+      }
+    })
+    .catch(error => {
+      console.error(error);
     })
   }
 

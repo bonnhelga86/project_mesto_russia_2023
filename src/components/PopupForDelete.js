@@ -7,13 +7,23 @@ export class PopupForDelete extends Popup {
     this._button = this._popup.querySelector('.button');
   }
 
+  _deleteCard = () => {
+    this._handleButtonClick(this._elementForDelete, this._cardId);
+  }
+
   setEventListeners() {
     super.setEventListeners();
-    this._button.addEventListener('click', this._handleButtonClick);
+    this._button.addEventListener('click', this._deleteCard);
+  }
+
+  open(elementForDelete, cardId) {
+    super.open();
+    this._cardId = cardId;
+    this._elementForDelete = elementForDelete;
   }
 
   close() {
     super.close();
-    this._button.removeEventListener('click', this._handleButtonClick);
+    this._button.removeEventListener('click', this._deleteAction);
   }
 }

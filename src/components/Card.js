@@ -1,11 +1,13 @@
 export class Card {
-  constructor({ name, link, likes, isMyCard }, templateSelector, { handleCardClick, handleDeleteClick }) {
+  constructor({ _id, name, link, likes, isMyCard }, templateSelector, { handleCardClick, handleLikeClick, handleDeleteClick }) {
+    this._cardId = _id;
     this._name = name;
     this._link = link;
     this._likes = likes.length;
     this._isMyCard = isMyCard;
     this._templateSelector = templateSelector;
     this._openPopupWithImage = handleCardClick;
+    this._likeCard = handleLikeClick;
     this._openPopupForDelete = handleDeleteClick;
     this._popupImage = document.querySelector('.popup-image');
     this._popupImagePhoto = document.querySelector('.popup-image__photo');
@@ -22,22 +24,13 @@ export class Card {
     return cardElement;
   }
 
-  _likeCard() {
-    this._cardElement.querySelector('.elements__like').classList.toggle('elements__like_type_active');
-  }
-
-  // _deleteCard() {
-  //   this._cardElement.querySelector('.elements__trash').closest('.elements__item').remove();
-  // }
-
   _setEventListeners() {
-    this._cardElement.querySelector('.elements__like').addEventListener('click', () => {
-      this._likeCard();
+    this._cardElement.querySelector('.elements__like').addEventListener('click', (event) => {
+      this._likeCard(event.target, this._cardId);
     });
 
-    this._cardElement.querySelector('.elements__trash').addEventListener('click', () => {
-      this._openPopupForDelete();
-      // this._deleteCard();
+    this._cardElement.querySelector('.elements__trash').addEventListener('click', (event) => {
+      this._openPopupForDelete(event.target.closest('.elements__item'), this._cardId);
     });
 
     this._cardImage.addEventListener('click', () => {

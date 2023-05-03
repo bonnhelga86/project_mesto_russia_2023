@@ -67,8 +67,9 @@ const popupWithImage = new PopupWithImage('.popup-image');
 
 // Создание экземпляра класса PopupForDelete
 const popupForDelete = new PopupForDelete('.popup-delete', {
-  handleButtonClick: () => {
-    console.log('Вы удалили карточку!');
+
+  handleButtonClick: (elementForDelete, cardId) => {
+    api.deleteCard(elementForDelete, cardId);
     popupForDelete.close();
   }
 });
@@ -82,8 +83,15 @@ const createCard = item => {
       handleCardClick: (name, link) => {
         popupWithImage.open(name, link);
       },
-      handleDeleteClick: () => {
-        popupForDelete.open();
+      handleLikeClick: (elementLikes, cardId) => {
+        api.likeCard(cardId).then(cardData => {
+          console.log(cardData);
+          elementLikes.classList.toggle('elements__like_type_active');
+          elementLikes.closest('.elements__content').querySelector('.elements__like-count').textContent = cardData.likes.length;
+        });
+      },
+      handleDeleteClick: (elementForDelete, cardId) => {
+        popupForDelete.open(elementForDelete, cardId);
       }
     }
   );
@@ -115,6 +123,7 @@ const popupCard = new PopupWithForm(
           return response.json()
         })
         .then(item => {
+          item.isMyCard = true;
           const newCard = createCard(item);
           sectionCard.addItem(newCard);
         })
