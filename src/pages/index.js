@@ -5,10 +5,7 @@ import {
   formAvatar,
   buttonOpenPopupProfile,
   buttonOpenPopupCard,
-  buttonOpenAvatar,
-  profileName,
-  profileAbout,
-  profileAvatar
+  buttonOpenAvatar
 } from '../utils/constants.js';
 
 import { validationConfig } from '../utils/validationConfig.js';
@@ -16,6 +13,7 @@ import { Api } from '../components/Api.js';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
+import { UserInfo } from '../components/UserInfo.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
@@ -86,13 +84,19 @@ const sectionCard = new Section({
   }
 }, '.elements__list-item');
 
+// Создание экземпляра класса UserInfo
+const user = new UserInfo({
+  nameSelector: '.profile__name',
+  aboutSelector: '.profile__profession',
+  avatarSelector: '.profile__image'
+});
+
 // Получение данных пользователя и карточек с сервера
 api.getUserInfo()
     .then(({ name, about, avatar }) => {
-      profileName.textContent = name;
-      profileAbout.textContent = about;
-      profileAvatar.src = avatar;
-      profileAvatar.alt = name;
+      user.setUserInfo(name, about);
+      user.setUserAvatar(avatar);
+
       return api.getInitialCards();
     })
     .then((items) => sectionCard.renderItems(items))
@@ -109,9 +113,7 @@ const popupProfile = new PopupWithForm(
 
       api.saveUserInfo(userName, userAbout, popup)
           .then(({ name, about }) => {
-            profileName.textContent = name;
-            profileAbout.textContent = about;
-            profileAvatar.alt = name;
+            user.setUserInfo(name, about);
           })
           .catch(error => {
             console.error(error);
@@ -131,7 +133,7 @@ const popupAvatar = new PopupWithForm(
 
       api.editUserAvatar(userAvatar, popup)
           .then(({ avatar }) => {
-            profileAvatar.src = avatar;
+            user.setUserAvatar(avatar);
           })
           .catch(error => {
             console.error(error);

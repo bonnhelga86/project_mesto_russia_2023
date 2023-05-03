@@ -5,14 +5,14 @@ export class UserInfo {
     this._avatar = document.querySelector(avatarSelector);
   }
 
-  setUserAvatar(avatar, name) {
+  setUserAvatar(avatar) {
     this._avatar.src = avatar;
-    this._avatar.alt = name;
   }
 
   setUserInfo(name, about) {
     this._name.textContent = name;
     this._about.textContent = about;
+    this._avatar.alt = name;
   }
 
 }
