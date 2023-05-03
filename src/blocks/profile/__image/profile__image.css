@@ -6,6 +6,20 @@
   margin-right: 30px;
 }
 
+.profile__image:hover {
+  cursor: pointer;
+  background-color: #000;
+  opacity: .2;
+}
+/*
+.profile__image:after {
+ content: url(	https://i.artfile.ru/4256x2832_1340783_[www.ArtFile.ru].jpg);
+ height: 40px;
+ width: 40px;
+}
+.profile__image:hover:after{
+  display: block;
+} */
 @media screen and (max-width: 885px) {
   .profile__image {
     margin-left: -22px;

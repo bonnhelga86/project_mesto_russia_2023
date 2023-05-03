@@ -30,11 +30,25 @@ export class Api {
     })
   }
 
-  saveCard(name, link) {
+  saveCard(name, link, popup) {
+    const popupButton = popup.querySelector('.popup__button');
+    popupButton.textContent = 'Сохранение...';
+
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({name, link})
+    })
+    .then(response => {
+      if(!response.ok) throw new Error('Обновление данных не удалось');
+
+      return response.json();
+    })
+    .catch(error => {
+      console.error(error);
+    })
+    .finally(() => {
+      popupButton.textContent = 'Создать';
     })
   }
 
@@ -97,7 +111,10 @@ export class Api {
     })
   }
 
-  saveUserInfo(name, about) {
+  saveUserInfo(name, about, popup) {
+    const popupButton = popup.querySelector('.popup__button');
+    popupButton.textContent = 'Сохранение...';
+
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -108,11 +125,35 @@ export class Api {
 
       return response.json();
     })
-    .then(userData => {
-      console.log(userData);
+    .catch(error => {
+      console.error(error);
+    })
+    .finally(() => {
+      popupButton.textContent = 'Сохранить';
+    })
+  }
+
+  editUserAvatar(avatar, popup) {
+
+    console.log('Смена аватара', avatar, popup);
+    const popupButton = popup.querySelector('.popup__button');
+    popupButton.textContent = 'Сохранение...';
+
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({avatar})
+    })
+    .then(response => {
+      if(!response.ok) throw new Error('Аватар не сменился');
+
+      return response.json();
     })
     .catch(error => {
       console.error(error);
+    })
+    .finally(() => {
+      popupButton.textContent = 'Сохранить';
     })
   }
 

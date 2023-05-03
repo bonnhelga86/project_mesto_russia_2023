@@ -12,7 +12,7 @@ export class PopupWithForm extends Popup {
     .reduce( (result, input) => ({ ...result, [input.name] : input.value }), {});
   }
 
-  _hanldeSubmitClick = event => this._callbackSubmit(event, this._getInputValues());
+  _hanldeSubmitClick = event => this._callbackSubmit(event, this._getInputValues(), this._popup);
 
   setEventListeners() {
     super.setEventListeners();
