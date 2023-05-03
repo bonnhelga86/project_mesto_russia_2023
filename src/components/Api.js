@@ -3,6 +3,7 @@ export class Api {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
     this._authorization = options.headers.authorization;
+    this._myId = null;
   }
 
   // Работа с карточками
@@ -18,7 +19,11 @@ export class Api {
       return response.json();
     })
     .then(cardsData => {
-      return cardsData.map((card) => ({ ...card, isMyCard: (card.owner._id === this._myId) }));
+      return cardsData.map((card) => ({
+        ...card,
+        isMyCard: (card.owner._id === this._myId),
+        isLike: (card.likes.some(like => like._id === this._myId))
+      }));
     })
     .catch(error => {
       console.error(error);
@@ -33,17 +38,15 @@ export class Api {
     })
   }
 
-  likeCard(cardId) {
-    console.log('Вы лайкнули карточку', cardId);
-
+  likeCard(cardId, likeAction) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: 'PUT',
+      method: likeAction,
       headers: {
         authorization: this._authorization
       }
     })
     .then(response => {
-      if(!response.ok) throw new Error('Не удалось поставить лайк');
+      if(!response.ok) throw new Error('Что-то пошло не так');
       return response.json();
     })
     .then(cardData => {
@@ -52,10 +55,6 @@ export class Api {
     .catch(error => {
       console.error(error);
     })
-  }
-
-  dislikeCard() {
-    console.log('Вы дизлайкнули карточку');
   }
 
   deleteCard(elementForDelete, cardId) {

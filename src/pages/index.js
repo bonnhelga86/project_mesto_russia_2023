@@ -84,8 +84,8 @@ const createCard = item => {
         popupWithImage.open(name, link);
       },
       handleLikeClick: (elementLikes, cardId) => {
-        api.likeCard(cardId).then(cardData => {
-          console.log(cardData);
+        const likeAction = elementLikes.classList.contains('elements__like_type_active') ? 'DELETE' : 'PUT';
+        api.likeCard(cardId, likeAction).then(cardData => {
           elementLikes.classList.toggle('elements__like_type_active');
           elementLikes.closest('.elements__content').querySelector('.elements__like-count').textContent = cardData.likes.length;
         });
