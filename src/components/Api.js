@@ -14,7 +14,7 @@ export class Api {
       }
     })
     .then(response => {
-      if(!response.ok) throw new Error('Информация о карточках в данный момент недоступна');
+      if(!response.ok) return Promise.reject(`Ошибка: ${res.status}`);
 
       return response.json();
     })
@@ -40,7 +40,7 @@ export class Api {
       body: JSON.stringify({name, link})
     })
     .then(response => {
-      if(!response.ok) throw new Error('Обновление данных не удалось');
+      if(!response.ok) return Promise.reject(`Ошибка: ${res.status}`);
 
       return response.json();
     })
@@ -60,7 +60,7 @@ export class Api {
       }
     })
     .then(response => {
-      if(!response.ok) throw new Error('Что-то пошло не так');
+      if(!response.ok) return Promise.reject(`Ошибка: ${res.status}`);
       return response.json();
     })
     .then(cardData => {
@@ -80,7 +80,7 @@ export class Api {
     })
     .then(response => {
       if(!response.ok) {
-        throw new Error('Карточка не удалилась');
+        return Promise.reject(`Ошибка: ${res.status}`);
       } else {
         elementForDelete.remove();
       }
@@ -98,7 +98,7 @@ export class Api {
       }
     })
     .then(response => {
-      if(!response.ok) throw new Error('Информация о пользователе в данный момент недоступна');
+      if(!response.ok) return Promise.reject(`Ошибка: ${res.status}`);
 
       return response.json();
     })
@@ -121,7 +121,7 @@ export class Api {
       body: JSON.stringify({name, about})
     })
     .then(response => {
-      if(!response.ok) throw new Error('Обновление данных не удалось');
+      if(!response.ok) return Promise.reject(`Ошибка: ${res.status}`);
 
       return response.json();
     })
@@ -145,7 +145,7 @@ export class Api {
       body: JSON.stringify({avatar})
     })
     .then(response => {
-      if(!response.ok) throw new Error('Аватар не сменился');
+      if(!response.ok) return Promise.reject(`Ошибка: ${res.status}`);
 
       return response.json();
     })

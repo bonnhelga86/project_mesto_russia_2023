@@ -18,7 +18,7 @@ import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
-import { PopupForDelete } from '../components/PopupForDelete.js';
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-65',
@@ -38,71 +38,17 @@ formCardValidator.enableValidation();
 const formAvatarValidator = new FormValidator(validationConfig, formAvatar);
 formAvatarValidator.enableValidation();
 
-// Получение данных о пользователе с сервера
-api.getUserInfo()
-    .then(({ name, about, avatar }) => {
-      profileName.textContent = name;
-      profileAbout.textContent = about;
-      profileAvatar.src = avatar;
-      profileAvatar.alt = name;
-    })
-    .catch(error => {
-      console.error(error);
-    });
-
-// Создание экземпляра класса PopupWithForm для профиля
-const popupProfile = new PopupWithForm(
-  '.popup-profile',
-  {
-    callbackSubmit: (event, {'profile-name': name, 'profile-profession': about}, popup) => {
-      event.preventDefault();
-
-      api.saveUserInfo(name, about, popup)
-          .then(({ name, about }) => {
-            profileName.textContent = name;
-            profileAbout.textContent = about;
-            profileAvatar.alt = name;
-          })
-          .catch(error => {
-            console.error(error);
-          });
-
-      popupProfile.close();
-    }
-  }
-);
-
-// Создание экземпляра класса PopupWithForm для редактирования аватара
-const popupAvatar = new PopupWithForm(
-  '.popup-avatar',
-  {
-    callbackSubmit: (event, {'avatar-link': avatar}, popup) => {
-      event.preventDefault();
-
-      api.editUserAvatar(avatar, popup)
-          .then(({ avatar }) => {
-            profileAvatar.src = avatar;
-          })
-          .catch(error => {
-            console.error(error);
-          });
-
-      popupAvatar.close();
-    }
-  }
-);
-
-// Создание экземпляра класса PopupWithImage
-const popupWithImage = new PopupWithImage('.popup-image');
-
-// Создание экземпляра класса PopupForDelete
-const popupForDelete = new PopupForDelete('.popup-delete', {
+// Создание экземпляра класса PopupWithConfirmation
+const popupWithConfirmation = new PopupWithConfirmation('.popup-delete', {
 
   handleButtonClick: (elementForDelete, cardId) => {
     api.deleteCard(elementForDelete, cardId);
-    popupForDelete.close();
+    popupWithConfirmation.close();
   }
 });
+
+// Создание экземпляра класса PopupWithImage
+const popupWithImage = new PopupWithImage('.popup-image');
 
 // Функция создания элемента карточки
 const createCard = item => {
@@ -125,7 +71,7 @@ const createCard = item => {
             });
       },
       handleDeleteClick: (elementForDelete, cardId) => {
-        popupForDelete.open(elementForDelete, cardId);
+        popupWithConfirmation.open(elementForDelete, cardId);
       }
     }
   );
@@ -140,12 +86,61 @@ const sectionCard = new Section({
   }
 }, '.elements__list-item');
 
-// Отображение карточек, подгруженных с сервера
-api.getInitialCards()
+// Получение данных пользователя и карточек с сервера
+api.getUserInfo()
+    .then(({ name, about, avatar }) => {
+      profileName.textContent = name;
+      profileAbout.textContent = about;
+      profileAvatar.src = avatar;
+      profileAvatar.alt = name;
+      return api.getInitialCards();
+    })
     .then((items) => sectionCard.renderItems(items))
     .catch(error => {
       console.error(error);
     });
+
+// Создание экземпляра класса PopupWithForm для профиля
+const popupProfile = new PopupWithForm(
+  '.popup-profile',
+  {
+    callbackSubmit: (event, {'profile-name': userName, 'profile-profession': userAbout}, popup) => {
+      event.preventDefault();
+
+      api.saveUserInfo(userName, userAbout, popup)
+          .then(({ name, about }) => {
+            profileName.textContent = name;
+            profileAbout.textContent = about;
+            profileAvatar.alt = name;
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      popupProfile.close();
+    }
+  }
+);
+
+// Создание экземпляра класса PopupWithForm для редактирования аватара
+const popupAvatar = new PopupWithForm(
+  '.popup-avatar',
+  {
+    callbackSubmit: (event, {'avatar-link': userAvatar}, popup) => {
+      event.preventDefault();
+
+      api.editUserAvatar(userAvatar, popup)
+          .then(({ avatar }) => {
+            profileAvatar.src = avatar;
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      popupAvatar.close();
+    }
+  }
+);
 
 // Создание экземпляра класса PopupWithForm для карточки
 const popupCard = new PopupWithForm(
