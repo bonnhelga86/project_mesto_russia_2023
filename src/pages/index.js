@@ -91,19 +91,6 @@ const user = new UserInfo({
   avatarSelector: '.profile__image'
 });
 
-// Получение данных пользователя и карточек с сервера
-api.getUserInfo()
-    .then(({ name, about, avatar }) => {
-      user.setUserInfo(name, about);
-      user.setUserAvatar(avatar);
-
-      return api.getInitialCards();
-    })
-    .then((items) => sectionCard.renderItems(items))
-    .catch(error => {
-      console.error(error);
-    });
-
 // Создание экземпляра класса PopupWithForm для профиля
 const popupProfile = new PopupWithForm(
   '.popup-profile',
@@ -114,6 +101,11 @@ const popupProfile = new PopupWithForm(
       api.saveUserInfo(userName, userAbout, popup)
           .then(({ name, about }) => {
             user.setUserInfo(name, about);
+
+            popupProfile.setInputValues({
+              'profile-name': name,
+              'profile-profession': about
+            });
           })
           .catch(error => {
             console.error(error);
@@ -123,6 +115,24 @@ const popupProfile = new PopupWithForm(
     }
   }
 );
+
+// Получение данных пользователя и карточек с сервера
+api.getUserInfo()
+    .then(({ name, about, avatar }) => {
+      user.setUserInfo(name, about);
+      user.setUserAvatar(avatar);
+
+      popupProfile.setInputValues({
+        'profile-name': name,
+        'profile-profession': about
+      });
+
+      return api.getInitialCards();
+    })
+    .then((items) => sectionCard.renderItems(items))
+    .catch(error => {
+      console.error(error);
+    });
 
 // Создание экземпляра класса PopupWithForm для редактирования аватара
 const popupAvatar = new PopupWithForm(
@@ -168,19 +178,25 @@ const popupCard = new PopupWithForm(
 
 // Функция работы с формой для профиля
 const fillPopupProfileFields = () => {
-  api.getUserInfo()
-      .then(({ name, about }) => {
-        formProfile['profile-name'].value = name;
-        formProfile['profile-profession'].value = about;
 
-        formProfileValidator.removeValidationErrors();
-        formProfileValidator.enableSubmitButton();
+  formProfileValidator.removeValidationErrors();
+  formProfileValidator.enableSubmitButton();
 
-        popupProfile.open();
-      })
-      .catch(error => {
-        console.error(error);
-      })
+  popupProfile.open();
+
+  // api.getUserInfo()
+  //     .then(({ name, about }) => {
+  //       formProfile['profile-name'].value = name;
+  //       formProfile['profile-profession'].value = about;
+
+  //       formProfileValidator.removeValidationErrors();
+  //       formProfileValidator.enableSubmitButton();
+
+  //       popupProfile.open();
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //     })
 }
 
 // Функция работы с формой для карточки

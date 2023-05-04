@@ -12,6 +12,12 @@ export class PopupWithForm extends Popup {
     .reduce( (result, input) => ({ ...result, [input.name] : input.value }), {});
   }
 
+  setInputValues = (values) => {
+    Object.keys(values).forEach(key => {
+      if(this._form[key]) this._form[key].value = values[key];
+    })
+  }
+
   _hanldeSubmitClick = event => this._callbackSubmit(event, this._getInputValues(), this._popup);
 
   setEventListeners() {
