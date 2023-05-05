@@ -1,11 +1,11 @@
 export class Card {
-  constructor(item, templateSelector, { handleCardClick, handleLikeClick, handleDeleteClick }) {
+  constructor(item, userId, templateSelector, { handleCardClick, handleLikeClick, handleDeleteClick }) {
     this._cardId = item._id;
     this._name = item.name;
     this._link = item.link;
-    this._likes = item.likes.length;
-    this._isMyCard = item.isMyCard;
-    this._isLike = item.isLike;
+    this._likes = item.likes;
+    this._cardOwner = item.owner._id;
+    this._myId = userId;
     this._templateSelector = templateSelector;
     this._openPopupWithImage = handleCardClick;
     this._likeCard = handleLikeClick;
@@ -39,6 +39,28 @@ export class Card {
     });
   }
 
+  _setDeleteIcon() {
+    this._cardOwner === this._myId &&
+    this._cardElement.querySelector('.elements__trash').classList.add('elements__trash_show');
+  }
+
+  _isLike = (likes) => {
+    return likes.some(like => like._id === this._myId);
+  }
+
+  _setLikesCounter = (count) => {
+    this._cardElement.querySelector('.elements__like-count').textContent = count;
+  }
+
+  setLikeStatus = (likes = this._likes) => {
+    const likeElement = this._cardElement.querySelector('.elements__like');
+    this._isLike(likes)
+      ? likeElement.classList.add('elements__like_type_active')
+      : likeElement.classList.remove('elements__like_type_active');
+
+    this._setLikesCounter(likes.length);
+  }
+
   generateCard() {
     this._cardElement = this._getTemplate();
     this._cardImage = this._cardElement.querySelector('.elements__photo');
@@ -48,11 +70,10 @@ export class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
 
-    this._cardElement.querySelector('.elements__like-count').textContent = this._likes;
     this._cardElement.querySelector('.elements__title').textContent = this._name;
 
-    this._isMyCard && this._cardElement.querySelector('.elements__trash').classList.add('elements__trash_show');
-    this._isLike && this._cardElement.querySelector('.elements__like').classList.add('elements__like_type_active');
+    this._setDeleteIcon();
+    this.setLikeStatus();
 
     return this._cardElement;
   }

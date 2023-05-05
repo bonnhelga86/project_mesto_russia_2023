@@ -3,7 +3,13 @@ export class Api {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
     this._authorization = options.headers.authorization;
-    this._myId = null;
+  }
+
+  _getResponseData(res) {
+    if (!res.ok) {
+        return Promise.reject(`Ошибка: ${res.status}`);
+    }
+    return res.json();
   }
 
   // Работа с карточками
@@ -12,67 +18,29 @@ export class Api {
       headers: {
         authorization: this._authorization
       }
-    })
-    .then(response => {
-      if(!response.ok) return Promise.reject(`Ошибка: ${res.status}`);
-
-      return response.json();
-    })
-    .then(cardsData => {
-      return cardsData.map((card) => ({
-        ...card,
-        isMyCard: (card.owner._id === this._myId),
-        isLike: (card.likes.some(like => like._id === this._myId))
-      }));
-    })
-    .catch(error => {
-      console.error(error);
-    })
+    }).then(this._getResponseData);
   }
 
-  saveCard(name, link, popup) {
-    const popupButton = popup.querySelector('.popup__button');
-    popupButton.textContent = 'Сохранение...';
-
+  saveCard(name, link) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({name, link})
-    })
-    .then(response => {
-      if(!response.ok) return Promise.reject(`Ошибка: ${res.status}`);
-
-      return response.json();
-    })
-    .catch(error => {
-      console.error(error);
-    })
-    .finally(() => {
-      popupButton.textContent = 'Создать';
-    })
+    }).then(this._getResponseData);
   }
 
-  likeCard(cardId, likeAction) {
+  likeCard(cardId, elementLikes) {
+    const likeAction = elementLikes.classList.contains('elements__like_type_active') ? 'DELETE' : 'PUT';
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: likeAction,
       headers: {
         authorization: this._authorization
       }
-    })
-    .then(response => {
-      if(!response.ok) return Promise.reject(`Ошибка: ${res.status}`);
-      return response.json();
-    })
-    .then(cardData => {
-      return cardData;
-    })
-    .catch(error => {
-      console.error(error);
-    })
+    }).then(this._getResponseData);
   }
 
-  deleteCard(elementForDelete, cardId) {
-    fetch(`${this._baseUrl}/cards/${cardId}`, {
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: {
         authorization: this._authorization
@@ -82,11 +50,8 @@ export class Api {
       if(!response.ok) {
         return Promise.reject(`Ошибка: ${res.status}`);
       } else {
-        elementForDelete.remove();
+        return Promise.resolve();
       }
-    })
-    .catch(error => {
-      console.error(error);
     })
   }
 
@@ -96,65 +61,22 @@ export class Api {
       headers: {
         authorization: this._authorization
       }
-    })
-    .then(response => {
-      if(!response.ok) return Promise.reject(`Ошибка: ${res.status}`);
-
-      return response.json();
-    })
-    .then(userData => {
-      this._myId = userData._id;
-      return userData;
-    })
-    .catch(error => {
-      console.error(error);
-    })
+    }).then(this._getResponseData);
   }
 
-  saveUserInfo(name, about, popup) {
-    const popupButton = popup.querySelector('.popup__button');
-    popupButton.textContent = 'Сохранение...';
-
+  saveUserInfo(name, about) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({name, about})
-    })
-    .then(response => {
-      if(!response.ok) return Promise.reject(`Ошибка: ${res.status}`);
-
-      return response.json();
-    })
-    .catch(error => {
-      console.error(error);
-    })
-    .finally(() => {
-      popupButton.textContent = 'Сохранить';
-    })
+    }).then(this._getResponseData);
   }
 
-  editUserAvatar(avatar, popup) {
-
-    console.log('Смена аватара', avatar, popup);
-    const popupButton = popup.querySelector('.popup__button');
-    popupButton.textContent = 'Сохранение...';
-
+  editUserAvatar(avatar) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({avatar})
-    })
-    .then(response => {
-      if(!response.ok) return Promise.reject(`Ошибка: ${res.status}`);
-
-      return response.json();
-    })
-    .catch(error => {
-      console.error(error);
-    })
-    .finally(() => {
-      popupButton.textContent = 'Сохранить';
-    })
+    }).then(this._getResponseData);
   }
-
 }

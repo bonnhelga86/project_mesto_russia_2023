@@ -40,8 +40,14 @@ formAvatarValidator.enableValidation();
 const popupWithConfirmation = new PopupWithConfirmation('.popup-delete', {
 
   handleButtonClick: (elementForDelete, cardId) => {
-    api.deleteCard(elementForDelete, cardId);
-    popupWithConfirmation.close();
+    api.deleteCard(cardId)
+        .then(() => {
+          elementForDelete.remove();
+          popupWithConfirmation.close();
+        })
+        .catch(error => {
+          console.error(error);
+        });
   }
 });
 
@@ -49,20 +55,19 @@ const popupWithConfirmation = new PopupWithConfirmation('.popup-delete', {
 const popupWithImage = new PopupWithImage('.popup-image');
 
 // Функция создания элемента карточки
-const createCard = item => {
+const createCard = (item, userId) => {
   const card = new Card(
     item,
+    userId,
     '#elements__template',
     {
       handleCardClick: (name, link) => {
         popupWithImage.open(name, link);
       },
       handleLikeClick: (elementLikes, cardId) => {
-        const likeAction = elementLikes.classList.contains('elements__like_type_active') ? 'DELETE' : 'PUT';
-        api.likeCard(cardId, likeAction)
+        api.likeCard(cardId, elementLikes)
             .then(cardData => {
-              elementLikes.classList.toggle('elements__like_type_active');
-              elementLikes.closest('.elements__content').querySelector('.elements__like-count').textContent = cardData.likes.length;
+              card.setLikeStatus(cardData.likes);
             })
             .catch(error => {
               console.error(error);
@@ -79,8 +84,8 @@ const createCard = item => {
 
 // Создание экземпляра класса Section
 const sectionCard = new Section({
-  renderer: (item) => {
-    return createCard(item);
+  renderer: (item, userId) => {
+    return createCard(item, userId);
   }
 }, '.elements__list-item');
 
@@ -88,8 +93,13 @@ const sectionCard = new Section({
 const user = new UserInfo({
   nameSelector: '.profile__name',
   aboutSelector: '.profile__profession',
-  avatarSelector: '.profile__image'
+  avatarSelector: '.profile__image',
+  popupSelector: '.popup-profile'
 });
+
+const renderLoading = (popupButton, value) => {
+  popupButton.textContent = value;
+}
 
 // Создание экземпляра класса PopupWithForm для профиля
 const popupProfile = new PopupWithForm(
@@ -98,38 +108,32 @@ const popupProfile = new PopupWithForm(
     callbackSubmit: (event, {'profile-name': userName, 'profile-profession': userAbout}, popup) => {
       event.preventDefault();
 
-      api.saveUserInfo(userName, userAbout, popup)
-          .then(({ name, about }) => {
-            user.setUserInfo(name, about);
+      const popupButton = popup.querySelector('.popup__button');
+      renderLoading(popupButton, 'Сохранение...');
 
-            popupProfile.setInputValues({
-              'profile-name': name,
-              'profile-profession': about
-            });
+      api.saveUserInfo(userName, userAbout)
+          .then((userData) => {
+            user.setUserInfo(userData);
+            popupProfile.close();
           })
           .catch(error => {
             console.error(error);
+          })
+          .finally(() => {
+            renderLoading(popupButton, 'Сохранить');
           });
-
-      popupProfile.close();
     }
   }
 );
 
 // Получение данных пользователя и карточек с сервера
-api.getUserInfo()
-    .then(({ name, about, avatar }) => {
-      user.setUserInfo(name, about);
-      user.setUserAvatar(avatar);
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+    .then(([userData, cardsData]) => {
+      user.setUserInfo(userData);
+      user.setUserAvatar(userData);
 
-      popupProfile.setInputValues({
-        'profile-name': name,
-        'profile-profession': about
-      });
-
-      return api.getInitialCards();
+      sectionCard.renderItems(cardsData, userData._id);
     })
-    .then((items) => sectionCard.renderItems(items))
     .catch(error => {
       console.error(error);
     });
@@ -141,15 +145,20 @@ const popupAvatar = new PopupWithForm(
     callbackSubmit: (event, {'avatar-link': userAvatar}, popup) => {
       event.preventDefault();
 
-      api.editUserAvatar(userAvatar, popup)
-          .then(({ avatar }) => {
-            user.setUserAvatar(avatar);
+      const popupButton = popup.querySelector('.popup__button');
+      renderLoading(popupButton, 'Сохранение...');
+
+      api.editUserAvatar(userAvatar)
+          .then((avatarData) => {
+            user.setUserAvatar(avatarData);
+            popupAvatar.close();
           })
           .catch(error => {
             console.error(error);
+          })
+          .finally(() => {
+            renderLoading(popupButton, 'Сохранить');
           });
-
-      popupAvatar.close();
     }
   }
 );
@@ -161,42 +170,34 @@ const popupCard = new PopupWithForm(
     callbackSubmit: (event, {'card-name': name, 'card-link': link}, popup) => {
       event.preventDefault();
 
-      api.saveCard(name, link, popup)
+      const popupButton = popup.querySelector('.popup__button');
+      renderLoading(popupButton, 'Сохранение...');
+
+      api.saveCard(name, link)
         .then(item => {
-          item.isMyCard = true;
-          const newCard = createCard(item);
+          const newCard = createCard(item, item.owner._id);
           sectionCard.addItem(newCard);
+
+          popupCard.close();
         })
         .catch(error => {
           console.error(error);
         })
-
-      popupCard.close();
+        .finally(() => {
+          renderLoading(popupButton, 'Создать');
+        })
     }
   }
 );
 
 // Функция работы с формой для профиля
 const fillPopupProfileFields = () => {
+  user.setInputValues(user.getUserInfo());
 
   formProfileValidator.removeValidationErrors();
   formProfileValidator.enableSubmitButton();
 
   popupProfile.open();
-
-  // api.getUserInfo()
-  //     .then(({ name, about }) => {
-  //       formProfile['profile-name'].value = name;
-  //       formProfile['profile-profession'].value = about;
-
-  //       formProfileValidator.removeValidationErrors();
-  //       formProfileValidator.enableSubmitButton();
-
-  //       popupProfile.open();
-  //     })
-  //     .catch(error => {
-  //       console.error(error);
-  //     })
 }
 
 // Функция работы с формой для карточки
