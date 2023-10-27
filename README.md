@@ -18,8 +18,6 @@
 ## Технологии
 
 <div>
-  <img src="https://img.shields.io/badge/React-%23fcc630?logo=react&logoColor=%23fff"
-  title="React" alt="React"/>&nbsp;
   <img src="https://img.shields.io/badge/CSS3-%23df2367?logo=css3&logoColor=%23fff"
   title="CSS3" alt="CSS3"/>&nbsp;
   <img src="https://img.shields.io/badge/HTML5-%23532ba3?logo=html5&logoColor=%23fff"
